@@ -10,6 +10,7 @@ output:
 ```{r, include=FALSE}
 library(tidyverse)
 library(haven)
+library(DiagrammeR)
 ```
 
 ### The group members (names and UNIs)
@@ -24,12 +25,41 @@ Coffee, as one of the most popular beverages in the world, is highly favored by 
 The National Health and Nutrition Examination Survey (NHANES) is uniquely well-suited for this study. NHANES contains nationally representative sampling with detailed, standardized measurements that are directly relevant to caffeine. It also contains clinically measured outcomes like blood pressure, pulse and BMI, meanwhile providing rich covariates such as age, sex, physical activity, and socioeconomic markers. By utilizing the abundant raw data, we can learn about the effect of coffee on human health and dose-response patterns through data analysis and draw transparent and reproducible public health inferences.
 
 ### The intended final products
-1. Construct a harmonized analytic dataset 
-2. Identify coffee-derived 
-3. Estimate dose–response 
-4. Conduct subgroup and sensitivity analyses
-5. Generate clear visualizations and statistical summaries 
-6. Provide a concise written interpretation 
+```{r}
+
+grViz("
+digraph {
+
+  graph [rankdir = LR]
+
+  node [shape = box, style = filled, fillcolor = '#e8f0fe']
+
+  # Define nodes
+  A [label='1. Construct a harmonized\nanalytic dataset']
+  B [label='2. Identify coffee-derived\nexposures']
+  C [label='3. Estimate dose–response']
+  D [label='4. Conduct subgroup and\nsensitivity analyses']
+  E [label='5. Generate visualizations\nand summaries']
+  F [label='6. Provide written\ninterpretation']
+
+  # First row
+  { rank = same; A; B; C }
+
+  # Second row
+  { rank = same; F; E; D }
+
+  # Flow direction (top row)
+  A -> B -> C
+
+  # Flow direction (bottom row)
+  D -> E -> F
+
+  # Downward connection and upward return
+  C -> D
+}
+")
+
+```
 
 The aim of these efforts is to generate a transparent, reproducible empirical dataset that can be employed to address the question of whether being a coffee drinker has beneficial, adverse, or null effects on human health. From NHANES dietary recall data, individual food item files, measures from the covariate, and physiologic examination files we will create a harmonized dataset that includes coding for both coffee consumption (as reported relevant to MARCA) and MAIC-derived caffeine (>80% in mg including all foods containing it), while separating coffee's caffeine intake through the food codes or nutrient intakes. We will estimate dose–response relationships with standard drinks of caffeine in relation to SBP and DBP, resting pulse rate, BMI and sleep duration or daytime sleepiness (both self-report), depressive symptoms. We also will conduct additional subgroup and sensitivity analyses (e.g., analysis of different levels of caffeine consumption, stratification by age, sex and physical activity, use of FDA guidance thresholds closer to 400 mg/day) to assess the extent to which any associations observed vary across subpopulations. The final products will be a well-documented analytic data set, reproducible code for all data manipulation and analysis steps, graphical representations and summary tables that demonstrate patterns of consumption and relationships with outcomes, and a brief written interpretation stating whether caffeine intake seems to have beneficial, neutral or adverse effects on health considering uncertainties, limitations.
 
