@@ -9,6 +9,7 @@ output:
 ---
 ```{r}
 library(tidyverse)
+library(haven)
 ```
 
 ### The group members (names and UNIs)
