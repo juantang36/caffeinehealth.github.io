@@ -1502,18 +1502,6 @@ border-radius: 0px;
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.1.0     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>library(haven)</code></pre>
 <div id="the-group-members-names-and-unis" class="section level3">
 <h3>The group members (names and UNIs)</h3>
 <p>Disheng Jiang (dj2763), Yurou Liu (yl6109), Ruhui Shen (rs4788), Juan
@@ -1547,44 +1535,31 @@ inferences.</p>
 </div>
 <div id="the-anticipated-data-sources" class="section level3">
 <h3>The anticipated data sources</h3>
+<p>The project will use publicly available data from the 2021-2023
+National Health and Nutrition Examination Survey (NHANES), maintained by
+the Centers for Disease Control and Prevention (CDC).</p>
+<p>We will combine multiple datasets that recall participants’
+demographic information, physical and laboratory examination results,
+and their dietary intake of coffee.</p>
+<p>The demographic file (DEMO_L.xpt) provides key covariates such as
+age, sex, and socioeconomic indicators. Health outcome data will be
+drawn from laboratory files measuring metabolic, cardiovascular, and
+inflammatory biomarkers, including fasting glucose (GLU_L.xpt), insulin
+(INS_L.xpt), glycohemoglobin (GHB_L.xpt), cholesterol and triglycerides
+(TCHOL_L.xpt, HDL_L.xpt, TRIGLY_L.xpt), high-sensitivity C-reactive
+protein (HSCRP_L.xpt), and kidney and liver function markers
+(ALB_CR_L.xpt, BIOPRO_L.xpt). These datasets will be merged by
+participant ID (SEQN) and linked with dietary recall data capturing
+caffeine and coffee intake.</p>
+<p>Through statistical modeling and visualization, this combined dataset
+will allow assessment of potential health effects associated with coffee
+consumption.</p>
 </div>
 <div id="the-planned-analyses-visualizations-coding-challenges" class="section level3">
 <h3>The planned analyses / visualizations / coding challenges</h3>
 </div>
 <div id="the-planned-timeline" class="section level3">
 <h3>The planned timeline</h3>
-<pre class="r"><code>timeline = tibble(
-  date = c(
-    &quot;11/7&quot;,
-    &quot;11/8–11/12&quot;,
-    &quot;11/12–11/16&quot;,
-    &quot;11/15–11/16&quot;,
-    &quot;11/16–11/19&quot;,
-    &quot;11/19–11/20&quot;,
-    &quot;11/21–11/26&quot;,
-    &quot;11/26–12/1&quot;,
-    &quot;12/2–12/3&quot;,
-    &quot;12/3–12/6&quot;
-  ),
-  work = c(
-    &quot;Determine project topic, find data source, complete the proposal&quot;,
-    &quot;Zoom meeting: determine final datasets and how to analyze data&quot;,
-    &quot;Complete final source collection&quot;,
-    &quot;Zoom meeting: determine detailed division of work&quot;,
-    &quot;Clean and tidy data&quot;,
-    &quot;Zoom meeting: design website structure&quot;,
-    &quot;Plot graphs and analyze data&quot;,
-    &quot;Complete report with visualizations and interpretations&quot;,
-    &quot;Proofread report&quot;,
-    &quot;Final webpage improvement and screencast&quot;
-  )
-)
-
-timeline |&gt;
-  knitr::kable(
-    caption = &quot;Project Timeline&quot;,
-    align = c(&quot;c&quot;, &quot;l&quot;)
-  )</code></pre>
 <table>
 <caption>Project Timeline</caption>
 <colgroup>
