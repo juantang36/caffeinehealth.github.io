@@ -2736,6 +2736,16 @@ border-radius: 0px;
 </div>
 
 
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.1.0     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <div id="the-group-members-names-and-unis" class="section level3">
 <h3>The group members (names and UNIs)</h3>
 <p>Disheng Jiang (dj2763), Yurou Liu (yl6109), Ruhui Shen (rs4788), Juan
@@ -2766,39 +2776,8 @@ inferences.</p>
 </div>
 <div id="the-intended-final-products" class="section level3">
 <h3>The intended final products</h3>
-<pre class="r"><code>grViz(&quot;
-digraph {
-
-  graph [rankdir = LR]
-
-  node [shape = box, style = filled, fillcolor = &#39;#e8f0fe&#39;]
-
-  # Define nodes
-  A [label=&#39;1. Construct a harmonized\nanalytic dataset&#39;]
-  B [label=&#39;2. Identify coffee-derived\nexposures&#39;]
-  C [label=&#39;3. Estimate dose–response&#39;]
-  D [label=&#39;4. Conduct subgroup and\nsensitivity analyses&#39;]
-  E [label=&#39;5. Generate visualizations\nand summaries&#39;]
-  F [label=&#39;6. Provide written\ninterpretation&#39;]
-
-  # First row
-  { rank = same; A; B; C }
-
-  # Second row
-  { rank = same; F; E; D }
-
-  # Flow direction (top row)
-  A -&gt; B -&gt; C
-
-  # Flow direction (bottom row)
-  D -&gt; E -&gt; F
-
-  # Downward connection and upward return
-  C -&gt; D
-}
-&quot;)</code></pre>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-c2ea500c9c9fcbfb4256" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-c2ea500c9c9fcbfb4256">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Construct a harmonized\nanalytic dataset\"]\n  B [label=\"2. Identify coffee-derived\nexposures\"]\n  C [label=\"3. Estimate dose–response\"]\n  D [label=\"4. Conduct subgroup and\nsensitivity analyses\"]\n  E [label=\"5. Generate visualizations\nand summaries\"]\n  F [label=\"6. Provide written\ninterpretation\"]\n\n  # First row\n  { rank = same; A; B; C }\n\n  # Second row\n  { rank = same; F; E; D }\n\n  # Flow direction (top row)\n  A -> B -> C\n\n  # Flow direction (bottom row)\n  D -> E -> F\n\n  # Downward connection and upward return\n  C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-3fa2648a6bd16375ce2f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-3fa2648a6bd16375ce2f">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Construct a harmonized\nanalytic dataset\"]\n  B [label=\"2. Identify coffee-derived\nexposures\"]\n  C [label=\"3. Estimate dose–response\"]\n  D [label=\"4. Conduct subgroup and\nsensitivity analyses\"]\n  E [label=\"5. Generate visualizations\nand summaries\"]\n  F [label=\"6. Provide written\ninterpretation\"]\n\n  # First row\n  { rank = same; A; B; C }\n\n  # Second row\n  { rank = same; F; E; D }\n\n  # Flow direction (top row)\n  A -> B -> C\n\n  # Flow direction (bottom row)\n  D -> E -> F\n\n  # Downward connection and upward return\n  C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>The aim of these efforts is to generate a transparent, reproducible
 empirical dataset that can be employed to address the question of
 whether being a coffee drinker has beneficial, adverse, or null effects
