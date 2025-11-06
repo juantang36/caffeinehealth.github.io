@@ -34,7 +34,7 @@ The demographic file (DEMO_L.xpt) provides key covariates such as age, sex, and 
 
 Through statistical modeling and visualization, this combined dataset will allow assessment of potential health effects associated with coffee consumption.
 
-### The planned analyses / visualizations / coding challenges
+### The planned analysis / visualizations / coding challenges
 
 ### The planned timeline
 ```{r, echo=FALSE}
