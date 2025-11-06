@@ -15,7 +15,7 @@ library(tidyverse)
 Disheng Jiang (dj2763), Yurou Liu (yl6109), Ruhui Shen (rs4788), Juan Tang (jt3649)
 
 ### The tentative project title
-
+Exploring whether coffee is beneficial or harmful to human health by using the NHANES datasets from the CDC.
 ### The motivation for this project
 
 ### The intended final products
