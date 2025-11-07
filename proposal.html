@@ -2746,7 +2746,6 @@ border-radius: 0px;
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre><code>## Warning: package &#39;DiagrammeR&#39; was built under R version 4.5.2</code></pre>
 <div id="the-group-members-names-and-unis" class="section level3">
 <h3>The group members (names and UNIs)</h3>
 <p>Disheng Jiang (dj2763), Yurou Liu (yl6109), Ruhui Shen (rs4788), Juan
@@ -2785,8 +2784,8 @@ inferences.</p>
 </div>
 <div id="the-intended-final-products" class="section level3">
 <h3>The intended final products</h3>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-c32bf30d8787e302f70c" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-c32bf30d8787e302f70c">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Construct a harmonized\nanalytic dataset\"]\n  B [label=\"2. Identify coffee-derived\nexposures\"]\n  C [label=\"3. Estimate dose–response\"]\n  D [label=\"4. Conduct subgroup and\nsensitivity analyses\"]\n  E [label=\"5. Generate visualizations\nand summaries\"]\n  F [label=\"6. Provide written\ninterpretation\"]\n\n  # First row\n  { rank = same; A; B; C }\n\n  # Second row\n  { rank = same; F; E; D }\n\n  # Flow direction (top row)\n  A -> B -> C\n\n  # Flow direction (bottom row)\n  D -> E -> F\n\n  # Downward connection and upward return\n  C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-f87fa90ceaea2bd9f8f9" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f87fa90ceaea2bd9f8f9">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Construct a harmonized\nanalytic dataset\"]\n  B [label=\"2. Identify coffee-derived\nexposures\"]\n  C [label=\"3. Estimate dose–response\"]\n  D [label=\"4. Conduct subgroup and\nsensitivity analyses\"]\n  E [label=\"5. Generate visualizations\nand summaries\"]\n  F [label=\"6. Provide written\ninterpretation\"]\n\n  # First row\n  { rank = same; A; B; C }\n\n  # Second row\n  { rank = same; F; E; D }\n\n  # Flow direction (top row)\n  A -> B -> C\n\n  # Flow direction (bottom row)\n  D -> E -> F\n\n  # Downward connection and upward return\n  C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>The aim of these efforts is to generate a transparent, reproducible
 empirical dataset that can be employed to address the question of
 whether being a coffee drinker has beneficial, adverse, or null effects
@@ -2826,19 +2825,12 @@ drawn from physical examination and laboratory files.</p>
 BPXO_L.xpt (Blood Pressure) will supply directly measured anthropometric
 and cardiovascular indicators such as BMI, and systolic/diastolic blood
 pressure.</p>
-<p>Lab reports measure metabolic, cardiovascular, and inflammatory
-biomarkers, including fasting glucose (GLU_L.xpt), insulin (INS_L.xpt),
-glycohemoglobin (GHB_L.xpt), cholesterol and triglycerides (TCHOL_L.xpt,
-HDL_L.xpt, TRIGLY_L.xpt), high-sensitivity C-reactive protein
-(HSCRP_L.xpt), and kidney and liver function markers (ALB_CR_L.xpt,
-BIOPRO_L.xpt). These datasets will be merged by participant ID (SEQN)
-and linked with dietary recall data capturing caffeine and coffee
-intake.</p>
+<p>Lab data measure metabolic, cardiovascular, and inflammatory
+biomarkers, including fasting glucose, insulin, glycohemoglobin,
+cholesterol and triglycerides, high-sensitivity C-reactive protein, and
+kidney and liver function markers.</p>
 <p>There is also self-reported sleep disorder (SLQ_L.xpt) dataset which
 we will use to analyze the effect of coffee intake.</p>
-<p>Through statistical modeling and visualization, this combined dataset
-will allow assessment of potential health effects associated with coffee
-consumption.</p>
 </div>
 <div id="the-planned-analysis-visualizations-coding-challenges" class="section level3">
 <h3>The planned analysis / visualizations / coding challenges</h3>

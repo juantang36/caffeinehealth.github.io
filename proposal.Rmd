@@ -76,11 +76,9 @@ The demographic file (DEMO_L.xpt) provides key covariates such as age, sex, and 
 
 Physical examination datasets including BMX_L.xpt (Body Measures) and BPXO_L.xpt (Blood Pressure) will supply directly measured anthropometric and cardiovascular indicators such as BMI, and systolic/diastolic blood pressure.
 
-Lab reports measure metabolic, cardiovascular, and inflammatory biomarkers, including fasting glucose (GLU_L.xpt), insulin (INS_L.xpt), glycohemoglobin (GHB_L.xpt), cholesterol and triglycerides (TCHOL_L.xpt, HDL_L.xpt, TRIGLY_L.xpt), high-sensitivity C-reactive protein (HSCRP_L.xpt), and kidney and liver function markers (ALB_CR_L.xpt, BIOPRO_L.xpt). These datasets will be merged by participant ID (SEQN) and linked with dietary recall data capturing caffeine and coffee intake. 
+Lab data measure metabolic, cardiovascular, and inflammatory biomarkers, including fasting glucose, insulin, glycohemoglobin, cholesterol and triglycerides, high-sensitivity C-reactive protein, and kidney and liver function markers.
 
 There is also self-reported sleep disorder (SLQ_L.xpt) dataset which we will use to analyze the effect of coffee intake. 
-
-Through statistical modeling and visualization, this combined dataset will allow assessment of potential health effects associated with coffee consumption.
 
 ### The planned analysis / visualizations / coding challenges
 
