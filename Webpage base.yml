@@ -1,0 +1,13 @@
+name: "Final Project"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Proposal"
+      href: proposal.html
+    - icon: fa-github fa-lg
+      href: https://github.com/juantang36/caffeinehealth.github.io.git
+
+output:
+  html_document:
+    theme: cerulean
