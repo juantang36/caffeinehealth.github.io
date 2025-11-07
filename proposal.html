@@ -2746,6 +2746,7 @@ border-radius: 0px;
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre><code>## Warning: package &#39;DiagrammeR&#39; was built under R version 4.5.2</code></pre>
 <div id="the-group-members-names-and-unis" class="section level3">
 <h3>The group members (names and UNIs)</h3>
 <p>Disheng Jiang (dj2763), Yurou Liu (yl6109), Ruhui Shen (rs4788), Juan
@@ -2761,8 +2762,16 @@ using the NHANES datasets from the CDC.</p>
 <p>Coffee, as one of the most popular beverages in the world, is highly
 favored by people. Since the caffeine in coffee has a regulatory effect
 on the central nervous system(Herqutanto et al., 2024), coffee is widely
-consumed for alertness. However, yet evidence on benefits and side
-effects (e.g., sleep disturbance, blood pressure) is mixed.</p>
+consumed for alertness. The debate over whether coffee is beneficial or
+harmful to human health is long standing. Some researchers suggest that
+moderate coffee consumption may help reduce the risk of type 2 diabetes
+and cardiovascular disease, and may be associated with anti-inflammatory
+and antioxidant effects (Barrea et al., 2023). However, other studies
+indicate that coffee intake could potentially increase the risk of
+certain cancers and fractures(Asoudeh et al., 2023; Carter et al.,
+2022). We wanted to explore the relationship between coffee intake and
+health through the analysis of large amounts of data and identify a
+reasonable intake level.</p>
 <p>The National Health and Nutrition Examination Survey (NHANES) is
 uniquely well-suited for this study. NHANES contains nationally
 representative sampling with detailed, standardized measurements that
@@ -2776,8 +2785,8 @@ inferences.</p>
 </div>
 <div id="the-intended-final-products" class="section level3">
 <h3>The intended final products</h3>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-604622e0f217c1cfdeaf" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-604622e0f217c1cfdeaf">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Construct a harmonized\nanalytic dataset\"]\n  B [label=\"2. Identify coffee-derived\nexposures\"]\n  C [label=\"3. Estimate dose–response\"]\n  D [label=\"4. Conduct subgroup and\nsensitivity analyses\"]\n  E [label=\"5. Generate visualizations\nand summaries\"]\n  F [label=\"6. Provide written\ninterpretation\"]\n\n  # First row\n  { rank = same; A; B; C }\n\n  # Second row\n  { rank = same; F; E; D }\n\n  # Flow direction (top row)\n  A -> B -> C\n\n  # Flow direction (bottom row)\n  D -> E -> F\n\n  # Downward connection and upward return\n  C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-c32bf30d8787e302f70c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c32bf30d8787e302f70c">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Construct a harmonized\nanalytic dataset\"]\n  B [label=\"2. Identify coffee-derived\nexposures\"]\n  C [label=\"3. Estimate dose–response\"]\n  D [label=\"4. Conduct subgroup and\nsensitivity analyses\"]\n  E [label=\"5. Generate visualizations\nand summaries\"]\n  F [label=\"6. Provide written\ninterpretation\"]\n\n  # First row\n  { rank = same; A; B; C }\n\n  # Second row\n  { rank = same; F; E; D }\n\n  # Flow direction (top row)\n  A -> B -> C\n\n  # Flow direction (bottom row)\n  D -> E -> F\n\n  # Downward connection and upward return\n  C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>The aim of these efforts is to generate a transparent, reproducible
 empirical dataset that can be employed to address the question of
 whether being a coffee drinker has beneficial, adverse, or null effects
