@@ -42,6 +42,8 @@ We will combine multiple datasets that recall participants’ demographic inform
 
 - The demographic file (DEMO_L.xpt) provides key covariates such as age, sex, and socioeconomic indicators. Health outcome data will be drawn from physical examination and laboratory files. 
 
+- We will use NHANES dietary interview data to identify and quantify coffee intake. We will extract food-level beverage data. Coffee consumption will be obtained using food codes.
+
 - Physical examination datasets including BMX_L.xpt (Body Measures) and BPXO_L.xpt (Blood Pressure) will supply directly measured anthropometric and cardiovascular indicators such as BMI, and systolic/diastolic blood pressure.
 
 - Lab data measure metabolic, cardiovascular, and inflammatory biomarkers, including fasting glucose, insulin, glycohemoglobin, cholesterol and triglycerides, high-sensitivity C-reactive protein, and kidney and liver function markers.
