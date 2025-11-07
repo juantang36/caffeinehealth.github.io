@@ -2736,18 +2736,6 @@ border-radius: 0px;
 </div>
 
 
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.2
-## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.1.0     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre><code>## Warning: package &#39;haven&#39; was built under R version 4.5.2</code></pre>
-<pre><code>## Warning: package &#39;DiagrammeR&#39; was built under R version 4.5.2</code></pre>
 <div id="the-group-members-names-and-unis" class="section level3">
 <h3>The group members (names and UNIs)</h3>
 <p>Disheng Jiang (dj2763), Yurou Liu (yl6109), Ruhui Shen (rs4788), Juan
@@ -2786,8 +2774,6 @@ public health inferences.</p>
 </div>
 <div id="the-intended-final-products" class="section level3">
 <h3>The intended final products</h3>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-8ba13e3b3a0ea0ced91e" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-8ba13e3b3a0ea0ced91e">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Construct a harmonized\nanalytic dataset\"]\n  B [label=\"2. Identify coffee-derived\nexposures\"]\n  C [label=\"3. Estimate dose–response\"]\n  D [label=\"4. Conduct subgroup and\nsensitivity analyses\"]\n  E [label=\"5. Generate visualizations\nand summaries\"]\n  F [label=\"6. Provide written\ninterpretation\"]\n\n  # First row\n  { rank = same; A; B; C }\n\n  # Second row\n  { rank = same; F; E; D }\n\n  # Flow direction (top row)\n  A -> B -> C\n\n  # Flow direction (bottom row)\n  D -> E -> F\n\n  # Downward connection and upward return\n  C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>The aim of these efforts is to generate a transparent, reproducible
 empirical dataset that can be employed to address the question of
 whether being a coffee drinker has beneficial, adverse, or null effects
@@ -2796,21 +2782,22 @@ files, measures from the covariate, and physiologic examination files we
 will create a harmonized dataset that includes coding for both coffee
 consumption (as reported relevant to MARCA) and MAIC-derived caffeine
 (&gt;80% in mg including all foods containing it), while separating
-coffee’s caffeine intake through the food codes or nutrient intakes. We
-will estimate dose–response relationships with standard drinks of
+coffee’s caffeine intake through the food codes or nutrient intakes.</p>
+<p>We will estimate dose–response relationships with standard drinks of
 caffeine in relation to SBP and DBP, resting pulse rate, BMI and sleep
 duration or daytime sleepiness (both self-report), depressive symptoms.
 We also will conduct additional subgroup and sensitivity analyses (e.g.,
 analysis of different levels of caffeine consumption, stratification by
 age, sex and physical activity, use of FDA guidance thresholds closer to
 400 mg/day) to assess the extent to which any associations observed vary
-across subpopulations. The final products will be a well-documented
-analytic data set, reproducible code for all data manipulation and
-analysis steps, graphical representations and summary tables that
-demonstrate patterns of consumption and relationships with outcomes, and
-a brief written interpretation stating whether caffeine intake seems to
-have beneficial, neutral or adverse effects on health considering
-uncertainties, limitations.</p>
+across subpopulations.</p>
+<p>The final products will be a well-documented analytic data set,
+reproducible code for all data manipulation and analysis steps,
+graphical representations and summary tables that demonstrate patterns
+of consumption and relationships with outcomes, and a brief written
+interpretation stating whether caffeine intake seems to have beneficial,
+neutral or adverse effects on health considering uncertainties,
+limitations.</p>
 </div>
 <div id="the-anticipated-data-sources" class="section level3">
 <h3>The anticipated data sources</h3>
@@ -2885,6 +2872,11 @@ codes, creating clear visualizations for subgroup and dose-response
 curves, and conducting statistical tests using survey-weighted methods.
 These steps are important for ensuring the accuracy and reliability of
 the analytical results.</p>
+</div>
+<div id="the-work-flow-chart" class="section level3">
+<h3>The work flow chart</h3>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-769aeb3f99b7b400d22f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-769aeb3f99b7b400d22f">{"x":{"diagram":"\ndigraph {\n\n  graph [rankdir = LR]\n\n  node [shape = box, style = filled, fillcolor = \"#e8f0fe\"]\n\n  # Define nodes\n  A [label=\"1. Submit proposal\"]\n  B [label=\"2. Organize, Clean and tidy data\"]\n  C [label=\"3. Construct webpage layout\"]\n  D [label=\"4. Final webpage deliverable\"]\n\n  # First row\n  { rank = same; A; B; C; D}\n\n  # Flow direction (top row)\n  A -> B -> C -> D\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="the-planned-timeline" class="section level3">
 <h3>The planned timeline</h3>
