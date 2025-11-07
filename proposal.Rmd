@@ -80,7 +80,26 @@ We will combine multiple datasets that recall participants’ demographic inform
 
 - There is also self-reported sleep disorder (SLQ_L.xpt) dataset which we will use to analyze the effect of coffee intake. 
 
-### The planned analysis / visualizations / coding challenges
+### The planned analysis / visualizations
+
+1. Exploratory Analysis of Coffee-Derived Caffeine Intake Patterns
+- Use grouped violin plots or stacked percentage bar charts to display the distribution of coffee-derived caffeine intake by age, sex, and weekday vs. weekend. 
+- Conduct statistical tests to quantify between-group differences.
+- Calculate simple correlation coefficients between coffee-derived caffeine intake and key health outcomes. (e.g., blood pressure, sleep duration, and other biomarkers).
+
+
+2. Visualizations of Dose-Response Relationships
+- Use scatter plots with smoothed curves to visually present the relationship between continuous coffee-derived caffeine intake and each health outcome. 
+    
+3. Subgroup Analysis 
+- Stratify the study sample into subgroups based on key variables such as age group and sex. Fit dose-response relationships between coffee-derived caffeine intake and health outcomes within each subgroup and visualize them for intuitive comparison.
+
+4. Sensitivity Analysis
+- Conduct sensitivity analyses using thresholds (e.g., FDA guidance: ~400 mg/day) by treating caffeine intake as a categorical variable or fitting piece-wise regression models, to assess the robustness of the findings from the primary association analysis.
+
+### Coding challenges
+
+The main challenges involve correctly handling NHANES complex survey design, precisely isolating caffeine sources from hundreds of food codes, creating clear visualizations for subgroup and dose-response curves, and conducting statistical tests using survey-weighted methods. These steps are important for ensuring the accuracy and reliability of the analytical results.
 
 ### The planned timeline
 ```{r, echo = FALSE}
