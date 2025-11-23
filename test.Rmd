@@ -3,115 +3,68 @@ title: "test"
 output: html_document
 ---
 
-```{r}
+```{r message = false}
 library(haven)
-library(janitor)
-library(dplyr)
+library(readr)
+library(tidyverse)
 
-read_xpt_clean <- function(path) {
-  read_xpt(path) |>
+raw_dir <- "./dataset"
+
+read_xpt_clean <- function(fname) {
+  read_xpt(file.path(raw_dir, fname)) |>
     clean_names()
 }
 
-raw_dir <- "."  
 
-biopro_fractures_totalca <- read_xpt_clean(
-  file.path(raw_dir, "(BIOPRO)_Fractures_total Ca.xpt")
-  )
+demo_demographics <- read_xpt_clean("DEMO_L.xpt")
 
-alb_cr_urine_albumin_creatinine <- read_xpt_clean(
-  file.path(raw_dir, "ALB_CR_L.xpt")
-  )
+blood_pressure_pulse <- read_xpt_clean("Blood_Pressure_Pulse.xpt")
 
-bax_bp_exam_context <- read_xpt_clean(
-  file.path(raw_dir, "BAX_L.xpt")
-  )
+cvd_chol_hdl   <- read_xpt_clean("CVD_Cholesterol_HDL.xpt")
+cvd_chol_ldl   <- read_xpt_clean("CVD_Cholesterol_LDL.xpt")
+cvd_chol_total <- read_xpt_clean("CVD_Cholesterol_total.xpt")
 
-bmx_body_measures <- read_xpt_clean(
-  file.path(raw_dir, "BMX_L.xpt")
-  )
+diab_ghb_hba1c        <- read_xpt_clean("Diabetes_Glycohemoglobin.xpt")
+diab_insulin          <- read_xpt_clean("Diabetes_Insulin.xpt")
+diab_fasting_glucose  <- read_xpt_clean("Diabetes_Plasma Fasting Glucose.xpt")
+diab_questionnaire    <- read_xpt_clean("Diabetes_Q.xpt")
 
-bpx_blood_pressure <- read_xpt_clean(
-  file.path(raw_dir, "BPXO_L.xpt")
-  )
+sleep_disorders <- read_xpt_clean("Sleep_Disorders.xpt")
 
-cvd_chol_hdl <- read_xpt_clean(
-  file.path(raw_dir, "CVD_Cholesterol_HDL.xpt")
-  )
+nut_intake_d1 <- read_xpt_clean("T_Nutrient_Intake_D1.xpt")
+nut_intake_d2 <- read_xpt_clean("T_Nutrient_Intake_D2.xpt")
 
-cvd_chol_ldl_trig <- read_xpt_clean(
-  file.path(raw_dir, "CVD_Cholesterol_LDL.xpt")
-  )
 
-cvd_chol_total <- read_xpt_clean(
-  file.path(raw_dir, "CVD_Cholesterol_total.xpt")
-  )
+food_codebook      <- read_xpt_clean("FoodCode.xpt")
+individual_foods_1 <- read_xpt_clean("Individual_Foods_1.xpt")
+individual_foods_2 <- read_xpt_clean("Individual_Foods_2.xpt")
 
-demo_demographics <- read_xpt_clean(
-  file.path(raw_dir, "DEMO_L.xpt")
-  )
-
-diab_ghb_hba1c <- read_xpt_clean(
-  file.path(raw_dir, "Diabetes_Glycohemoglobin.xpt")
-  )
-
-diab_insulin <- read_xpt_clean(
-  file.path(raw_dir, "Diabetes_Insulin.xpt")
-)
-
-diab_fasting_glucose <- read_xpt_clean(
-  file.path(raw_dir, "Diabetes_Plasma Fasting Glucose.xpt")
-)
-
-diab_questionnaire <- read_xpt_clean(
-  file.path(raw_dir, "Diabetes_Q.xpt")
-)
-
-food_codebook <- read_xpt_clean(
-  file.path(raw_dir, "FoodCode.xpt")
-)
-
-fracture_vitamind <- read_xpt_clean(
-  file.path(raw_dir, "Fracture_VitaminD.xpt")
-)
-
-hscrp_inflammation_marker <- read_xpt_clean(
-  file.path(raw_dir, "HSCRP_L.xpt")
-)
-
-lux_env_exposure <- read_xpt_clean(
-  file.path(raw_dir, "LUX_L.xpt")
-)
-
-slq_sleep_questionnaire <- read_xpt_clean(
-  file.path(raw_dir, "SLQ_L.xpt")
-)
-
-nut_intake_day1 <- read_xpt_clean(
-  file.path(raw_dir, "T_Nutrient_Intake_D1.xpt")
-)
-
-nut_intake_day2 <- read_xpt_clean(
-  file.path(raw_dir, "T_Nutrient_Intake_D2.xpt")
-)
 
 ```
 
 ```{r}
 analytic <- demo_demographics |>
-  left_join(bmx_body_measures, by = "seqn") |>
-  left_join(bpx_blood_pressure, by = "seqn") |>
-  left_join(bax_bp_exam_context, by = "seqn") |>
-  left_join(alb_cr_urine_albumin_creatinine, by = "seqn") |>
-  left_join(biopro_fractures_totalca, by = "seqn") |>
+  # pressure and pulse
+  left_join(blood_pressure_pulse, by = "seqn") |>
+  
+  # cholesterol
   left_join(cvd_chol_total, by = "seqn") |>
-  left_join(cvd_chol_hdl, by = "seqn") |>
-  left_join(cvd_chol_ldl_trig, by = "seqn") |>
-  left_join(diab_ghb_hba1c, by = "seqn") |>
-  left_join(diab_insulin, by = "seqn") |>
-  left_join(diab_fasting_glucose, by = "seqn")
+  left_join(cvd_chol_hdl,   by = "seqn") |>
+  left_join(cvd_chol_ldl,   by = "seqn") |>
+  
+  # diabetes
+  left_join(diab_ghb_hba1c,       by = "seqn") |>
+  left_join(diab_insulin,         by = "seqn") |>
+  left_join(diab_fasting_glucose, by = "seqn") |>
+  left_join(diab_questionnaire,   by = "seqn") |>
+  
+  # sleep
+  left_join(sleep_disorders, by = "seqn") |>
+  
+  # intake
+  left_join(nut_intake_d1, by = "seqn") |>
+  left_join(nut_intake_d2, by = "seqn")
 
-
-write.csv(analytic, "analytic.csv", row.names = FALSE)
+write_csv(analytic, "analytic.csv") 
 ```
 
