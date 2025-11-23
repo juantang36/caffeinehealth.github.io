@@ -1,0 +1,117 @@
+---
+title: "test"
+output: html_document
+---
+
+```{r}
+library(haven)
+library(janitor)
+library(dplyr)
+
+read_xpt_clean <- function(path) {
+  read_xpt(path) |>
+    clean_names()
+}
+
+raw_dir <- "."  
+
+biopro_fractures_totalca <- read_xpt_clean(
+  file.path(raw_dir, "(BIOPRO)_Fractures_total Ca.xpt")
+  )
+
+alb_cr_urine_albumin_creatinine <- read_xpt_clean(
+  file.path(raw_dir, "ALB_CR_L.xpt")
+  )
+
+bax_bp_exam_context <- read_xpt_clean(
+  file.path(raw_dir, "BAX_L.xpt")
+  )
+
+bmx_body_measures <- read_xpt_clean(
+  file.path(raw_dir, "BMX_L.xpt")
+  )
+
+bpx_blood_pressure <- read_xpt_clean(
+  file.path(raw_dir, "BPXO_L.xpt")
+  )
+
+cvd_chol_hdl <- read_xpt_clean(
+  file.path(raw_dir, "CVD_Cholesterol_HDL.xpt")
+  )
+
+cvd_chol_ldl_trig <- read_xpt_clean(
+  file.path(raw_dir, "CVD_Cholesterol_LDL.xpt")
+  )
+
+cvd_chol_total <- read_xpt_clean(
+  file.path(raw_dir, "CVD_Cholesterol_total.xpt")
+  )
+
+demo_demographics <- read_xpt_clean(
+  file.path(raw_dir, "DEMO_L.xpt")
+  )
+
+diab_ghb_hba1c <- read_xpt_clean(
+  file.path(raw_dir, "Diabetes_Glycohemoglobin.xpt")
+  )
+
+diab_insulin <- read_xpt_clean(
+  file.path(raw_dir, "Diabetes_Insulin.xpt")
+)
+
+diab_fasting_glucose <- read_xpt_clean(
+  file.path(raw_dir, "Diabetes_Plasma Fasting Glucose.xpt")
+)
+
+diab_questionnaire <- read_xpt_clean(
+  file.path(raw_dir, "Diabetes_Q.xpt")
+)
+
+food_codebook <- read_xpt_clean(
+  file.path(raw_dir, "FoodCode.xpt")
+)
+
+fracture_vitamind <- read_xpt_clean(
+  file.path(raw_dir, "Fracture_VitaminD.xpt")
+)
+
+hscrp_inflammation_marker <- read_xpt_clean(
+  file.path(raw_dir, "HSCRP_L.xpt")
+)
+
+lux_env_exposure <- read_xpt_clean(
+  file.path(raw_dir, "LUX_L.xpt")
+)
+
+slq_sleep_questionnaire <- read_xpt_clean(
+  file.path(raw_dir, "SLQ_L.xpt")
+)
+
+nut_intake_day1 <- read_xpt_clean(
+  file.path(raw_dir, "T_Nutrient_Intake_D1.xpt")
+)
+
+nut_intake_day2 <- read_xpt_clean(
+  file.path(raw_dir, "T_Nutrient_Intake_D2.xpt")
+)
+
+```
+
+```{r}
+analytic <- demo_demographics |>
+  left_join(bmx_body_measures, by = "seqn") |>
+  left_join(bpx_blood_pressure, by = "seqn") |>
+  left_join(bax_bp_exam_context, by = "seqn") |>
+  left_join(alb_cr_urine_albumin_creatinine, by = "seqn") |>
+  left_join(biopro_fractures_totalca, by = "seqn") |>
+  left_join(cvd_chol_total, by = "seqn") |>
+  left_join(cvd_chol_hdl, by = "seqn") |>
+  left_join(cvd_chol_ldl_trig, by = "seqn") |>
+  left_join(diab_ghb_hba1c, by = "seqn") |>
+  left_join(diab_insulin, by = "seqn") |>
+  left_join(diab_fasting_glucose, by = "seqn")
+
+
+write.csv(analytic, "analytic.csv", row.names = FALSE)
+```
+
