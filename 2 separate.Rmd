@@ -3,3 +3,50 @@ title: "2 separate"
 output: html_document
 ---
 
+```{r}
+library(tidyverse)
+library(readr)
+library(janitor)
+
+analytic = read.csv("./analytic.csv")
+
+individual_foods_1 <- read_xpt_clean("./Individual_Foods_1.xpt")
+individual_foods_2 <- read_xpt_clean("./Individual_Foods_2.xpt")
+
+
+
+
+# filter id
+id1 <- individual_foods_1  |>
+  distinct(seqn) |>
+  pull(seqn)
+
+id2 <- individual_foods_2 |>
+  distinct(seqn) |>
+  pull(seqn)
+
+# cross check
+habit_ids <- intersect(id1, id2)
+
+# label
+analytic2 <- analytic |>
+  mutate(
+    coffee_habit = if_else(
+      seqn %in% habit_ids,
+      "habit",      
+      "no_habit"    
+    )
+  )
+
+# yes
+coffee_habit_yes <- analytic2 |>
+  filter(coffee_habit == "habit")
+
+# no
+coffee_habit_no <- analytic2 |>
+  filter(coffee_habit == "no_habit")
+
+coffee_habit_yes
+coffee_habit_no
+```
+
