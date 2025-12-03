@@ -1,0 +1,67 @@
+---
+title: "Read_dataset"
+output: github_document
+date: "2025-12-03"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+```{r}
+analytic = read_csv("./analytic.csv")
+view(analytic)
+```
+
+
+## Blood_Pressure_Pulse
+```{r}
+pressure <- haven::read_xpt("./dataset/Blood_Pressure_Pulse.xpt")
+view(pressure)
+```
+
+## Sleep
+```{r}
+sleep <- haven::read_xpt("./dataset/Sleep_Disorders.xpt")
+view(sleep)
+```
+
+## Diabetes
+```{r}
+glyco <- haven::read_xpt("./dataset/Diabetes_Glycohemoglobin.xpt")
+view(glyco)
+```
+
+```{r}
+insulin <- haven::read_xpt("./dataset/Diabetes_insulin.xpt")
+view(insulin)
+```
+
+```{r}
+glucose <- haven::read_xpt("./dataset/Diabetes_Plasma Fasting Glucose.xpt")
+view(glucose)
+```
+
+```{r}
+Dia_Q <- haven::read_xpt("./dataset/Diabetes_Q.xpt")
+view(Dia_Q)
+```
+
+
+## CVD
+```{r}
+HDL <- haven::read_xpt("./dataset/CVD_Cholesterol_HDL.xpt")
+view(HDL)
+```
+
+```{r}
+LDL <- haven::read_xpt("./dataset/CVD_Cholesterol_LDL.xpt")
+view(LDL)
+```
+
+```{r}
+Total <- haven::read_xpt("./dataset/CVD_Cholesterol_total.xpt")
+view(Total)
+```
+
+
