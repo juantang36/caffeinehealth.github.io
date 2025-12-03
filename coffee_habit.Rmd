@@ -1,0 +1,78 @@
+---
+title: "coffee_habit"
+date: "2025-12-03"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(haven)
+library(janitor)
+```
+
+#### Filter USDA food code for coffee
+```{r coffee_food_code}
+foodcode = read_xpt("dataset/FoodCode.xpt") |>
+  clean_names()
+# filter food codes that include "coffee"
+coffee_foods = foodcode |>
+  mutate(desc = tolower(drxfcld)) |>
+  filter(str_detect(desc, "coffee"))
+# USDA food code for coffee
+coffee_code = coffee_foods |>
+  pull(drxfdcd) |>
+  unique()
+```
+ 
+#### Clean and tidy diet interview dataset
+```{r tidy_diet_data}
+# import dataset
+individual_foods_1 = read_xpt("dataset/Individual_Foods_1.xpt") |>
+  clean_names()
+individual_foods_2 = read_xpt("dataset/Individual_Foods_2.xpt") |>
+  clean_names()
+```
+
+#### Coffee drinking habits
+```{r coffee_habits}
+# participants that consume coffee on both day 1 and day 2
+coffee_day_1 = individual_foods_1 |>
+  # dr1ifdcd is the variable name for USDA food code
+  filter(dr1ifdcd %in% coffee_code) |> 
+  # coffee drinker on day 1
+  distinct(seqn) |>
+  pull(seqn)
+
+coffee_day_2 = individual_foods_2 |>
+  # dr2ifdcd is the variable name for USDA food code
+  filter(dr2ifdcd %in% coffee_code) |> 
+  # coffee drinker on day 2
+  distinct(seqn) |>
+  pull(seqn)
+  
+# coffee_habit: consume coffee on both days
+ids_both_days = intersect(coffee_day_1, coffee_day_2)
+
+# consume coffee for at least one day
+ids_any_day = union(coffee_day_1, coffee_day_2)
+
+# moderate coffee consumption: consume coffee only on one day
+ids_one_day_only = setdiff(ids_any_day, ids_both_days)
+
+# all participants
+all_ids = union(individual_foods_1$seqn, 
+                individual_foods_2$seqn)
+
+# no_coffee_habit: do not consume coffee on both days
+ids_never = setdiff(all_ids, ids_any_day)
+length(ids_never)
+
+length(ids_both_days)
+length(ids_one_day_only)
+length(ids_never)
+length(all_ids)
+```
+
+
