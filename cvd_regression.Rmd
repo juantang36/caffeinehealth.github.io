@@ -1,0 +1,106 @@
+---
+title: "CVD_regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(patchwork)
+library(tidyverse)
+library(readr)
+library(haven)
+library(janitor)
+library(ggplot2)
+library(plotly)
+analytic = read_csv("./analytic.csv")
+```
+
+```{r}
+# Data tidying
+cvd_rg = analytic |>
+  rename(
+    total_cholesterol = lbxtc, # unit = mg/dl
+    hdl = lbdhdd, # good cholesterol, unit = mg/dl
+    ldl = lbdldlm # bad cholesterol, unit = mg/dl (Martin-Hopkins)
+  ) |>
+  mutate(caffeine_mg = (dr1tcaff + dr2tcaff) / 2) %>% 
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    hdl, 
+    ldl, 
+    total_cholesterol,
+    caffeine_mg
+  ) |>
+  filter(
+    !is.na(hdl), 
+    !is.na(ldl), 
+    !is.na(total_cholesterol), 
+    coffee_habit_binary == "TRUE"
+  )
+
+# Regression model
+model_chlesterol = lm(total_cholesterol ~ caffeine_mg, data = cvd_rg)
+model_hdl = lm(hdl ~ caffeine_mg, data = cvd_rg)
+model_ldl = lm(ldl ~ caffeine_mg, data = cvd_rg)
+
+summary(model_chlesterol)
+summary(model_hdl)
+summary(model_ldl)
+
+# Visuallizatoin
+chlesterol_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = total_cholesterol)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(title = "CVD biomarkers vs caffeine intake", x = "Caffeine (mg)", y = "Biomarkers (mg/dL)") + 
+  theme(plot.title = element_text(hjust = .5))
+
+hdl_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = hdl)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = "Caffeine (mg)", y = " ")
+
+ldl_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = ldl)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = "Caffeine (mg)", y = " ") 
+
+cvd_rg_interactive = subplot(
+  ggplotly(chlesterol_rg, tooltip = "all"),
+  ggplotly(hdl_rg, tooltip = "all"),
+  ggplotly(ldl_rg, tooltip = "all"),
+  nrows = 1, 
+  titleX = TRUE, 
+  titleY = TRUE, 
+  margin = 0.05) %>% 
+  layout(
+    annotations = list(
+      list(
+        x = 0.16, y = 1.07,
+        text = "<b>chlesterol</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.5, y = 1.07,
+        text = "<b>hdl</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.84, y = 1.07,
+        text = "<b>ldl</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      )
+    ),
+    margin = list(t = 80), 
+    showlegend = FALSE
+  ) 
+
+cvd_rg_interactive
+```
