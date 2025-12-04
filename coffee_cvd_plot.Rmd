@@ -50,6 +50,13 @@ coffee_habit = factor(coffee_habit, levels = c("No", "Yes"))
     cols = c(hdl, ldl, total_cholesterol),
     names_to = "biomarker",
     values_to = "value"
+  ) |>
+  mutate(
+    biomarker = factor(
+      biomarker, 
+      levels = c("hdl", "ldl", "total_cholesterol"), 
+      labels = c("HDL", "LDL", "Total Cholesterol")
+    )
   )
 
 # ggplot: violin + boxplot, faceted by biomarker
@@ -61,22 +68,7 @@ p = ggplot(cvd_long, aes(x = coffee_habit, y = value, fill = coffee_habit)) +
     x = "Coffee habit",
     y = "Biomarker level (mg/dL)",
     title = "CVD biomarkers by coffee habit"
-  ) + 
-  stat_compare_means(
-    method = "t.test",
-    method.args = list(paired = FALSE), 
-    label = "p.format",
-    comparisons = list(c("Coffee both days", "No coffee")),
-    label.y.npc = "top",
-    vjust = -0.5,
-    size = 3
-  ) + 
-  facet_wrap(~ biomarker, scales = "free_y") +
-  labs(
-    x = "Coffee habit",
-    y = "Biomarker level (mg/dL)",
-    title = "CVD biomarkers by coffee habit"
-  ) + 
+  ) +
   theme_minimal() +
   theme(
     legend.position = "none",
@@ -85,21 +77,34 @@ p = ggplot(cvd_long, aes(x = coffee_habit, y = value, fill = coffee_habit)) +
 
 # turn into interactive plot
 p_interactive = ggplotly(p)
-p_interactive = p_interactive %>% 
-    layout(
-    annotations = list(
-      list(
-        x = 0.5, y = 1.02,
-        text = " p=1.5e-08***                                                    p=4.5e-05***                                                     p=1.6e-09***",
-        xref = "paper", yref = "paper",
-        showarrow = FALSE,
-        font = list(size = 10)
-      )
-    )
-  )
-
 p_interactive
-
 ```
 
+#### Two-sample t-test
+```{r t-test}
+cvd_ttest_raw = cvd_long |>
+  group_by(biomarker) |>
+  group_modify(~ broom::tidy(t.test(value ~ coffee_habit_binary, data = .x))) |>
+  ungroup()
 
+# clean results: convert direction to (yes-no), flip CI accordingly
+cvd_ttest_clean = cvd_ttest_raw |>
+  transmute(
+    biomarker, 
+    mean_no = estimate1, 
+    mean_yes = estimate2, 
+    diff_mean = estimate2 - estimate1, 
+    ci_low = -conf.high, 
+    ci_high = -conf.low, 
+    p_value = p.value
+  )
+
+knitr::kable(cvd_ttest_clean)
+```
+
+Based on the two-sample t-tests, HDL (good cholesterol) levels were higher among coffee drinkers with a statistically significant difference (mean difference = `r round(cvd_ttest_clean$diff_mean[cvd_ttest_clean$biomarker == "HDL"], 2)` mg/dL, 95% CI: `r paste0("(", round(cvd_ttest_clean$ci_low[cvd_ttest_clean$biomarker == "HDL"], 2),", ", round(cvd_ttest_clean$ci_high[cvd_ttest_clean$biomarker == "HDL"], 2), ")")`, *p* = `r signif(cvd_ttest_clean$p_value[cvd_ttest_clean$biomarker == "HDL"], 3)`).
+
+For LDL (bad cholesterol), the mean difference was `r round(cvd_ttest_clean$diff_mean[cvd_ttest_clean$biomarker == "LDL"], 2)` mg/dL (95% CI: `r paste0("(", round(cvd_ttest_clean$ci_low[cvd_ttest_clean$biomarker == "LDL"], 2), ", ", round(cvd_ttest_clean$ci_high[cvd_ttest_clean$biomarker == "LDL"], 2), ")")`), with *p* = `r signif(cvd_ttest_clean$p_value[cvd_ttest_clean$biomarker == "LDL"], 3)`, 
+indicating that the difference was not statistically significant.
+
+Total cholesterol was also significantly higher among coffee drinkers (mean difference = `r round(cvd_ttest_clean$diff_mean[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2)` mg/dL, 95% CI: `r paste0("(", round(cvd_ttest_clean$ci_low[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2), ", ", round(cvd_ttest_clean$ci_high[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2), ")")`, *p* = `r signif(cvd_ttest_clean$p_value[cvd_ttest_clean$biomarker == "Total Cholesterol"], 3)`).
