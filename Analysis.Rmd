@@ -14,7 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Overview of analytic strategy
 In this analysis, we first compared individuals (age range: 20-70) with and without coffee-drinking habits based on the results of two 24-hour dietary recall surveys and experimental biomarker data. Subsequently, we employed regression models to investigate the dose-response relationship between caffeine intake and selected biomarkers.
 
-We organized the analysis in two steps: (1)  comparison between groups of individuals with and without coffee-intake habits, and (2) regression analyses with continuous caffeine intake as the exposure.
+We organized the analysis in two steps: 
+
+- Comparison between groups of individuals with and without coffee-intake habits.
+- Regression analyses with continuous caffeine intake as the exposure.
 
 
 ## Group Comparisons: Coffee Intake vs No Coffe Intake
@@ -27,6 +30,11 @@ The violin plots indicate that SBP and DBP distributions are very similar betwee
 For pulse rate, the ridgeline densities show broadly overlapping distributions, with the coffee-habit group trending slightly higher in pulse but again with only minor separation between curves. This pattern suggests that regular coffee drinkers may have a somewhat higher resting heart rate, but the magnitude of the difference appears small at the population level.
 
 From a cardiovascular-risk perspective, mean SBP and DBP in both groups fall within the normotensive to mildly elevated range, and the between-group differences are much smaller than thresholds used to define hypertension (e.g., SBP ≥ 130 mmHg). Overall, our unadjusted comparisons do not provide strong evidence that habitual coffee consumption is associated with substantial chronic elevations in blood pressure or resting pulse. As with the diabetes biomarkers, these results are cross-sectional and may be confounded by age, BMI, smoking, medication use, physical activity, and other lifestyle factors. Therefore, they should be interpreted as descriptive and hypothesis-generating. In subsequent regression analyses, we will examine dose–response relationships between caffeine intake and blood pressure and pulse while adjusting for key confounders.
+
+
+### Coffee Intake and Sleep Status
+
+
 
 ### Coffee Intake and Diabetes Risk
 Among participants with complete diabetes biomarker data (N = 2439), we compared fasting glucose, glycohemoglobin (HbA1c), and fasting insulin between adults with and without coffee intake habit. The bar plot shows mean biomarker levels with 95% confidence intervals by coffee habit, and the table summarizes group means, mean differences, confidence intervals, and p-values.
