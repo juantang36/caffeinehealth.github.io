@@ -105,7 +105,7 @@ gg_bp_mean_line
 ```
 Displayed here with 95% confidence intervals are the mean diastolic and systolic blood pressure readings for the whole cohort. The group that regularly drinks coffee had somewhat higher systolic blood pressure than the group that does not, but there is no change in diastolic blood pressure. Since the confidence intervals for different groups overlap, it's possible that the observed changes in means may not reflect significant impacts. In addition to the distributions given for individuals, this graphic gives a clear picture of the population as a whole.
 
-3. Pulse Ridgeline Plot
+## 3. Pulse Ridgeline Plot
 ```{r echo = TRUE}
 gg_pulse_ridge <- 
   ggplot(bp_sleep_df, aes(x = pulse, y = coffee_group, fill = coffee_group)) +
@@ -118,7 +118,7 @@ gg_pulse_ridge
 ```
 The ridgeline density plot visualizes pulse-rate distributions across coffee habits. While the overall shapes are similar, the coffee-habit group appears to trend slightly higher in pulse rate, though the overlap between groups is substantial. This plot effectively demonstrates distributional differences without relying on summary statistics and provides an intuitive sense of how pulse varies across the cohort.
 
-4.Average Sleep Duration Violin Plot
+## 4.Average Sleep Duration Violin Plot
 ```{r echo = TRUE}
 gg_sleep_violin <- 
   ggplot(bp_sleep_df, aes(x = coffee_group, y = sleep_avg, fill = coffee_group)) +
@@ -132,7 +132,7 @@ gg_sleep_violin
 ```
 This visualization shows the distribution of average daily sleep time across coffee-consumption categories. The central tendencies differ only slightly, with coffee-habit individuals sleeping marginally less on average. The overall shape and spread are similar across categories, suggesting that habitual coffee intake is not strongly related to average sleep duration. The combination of violin and boxplot elements provides both distributional context and robust summary measures.
 
-5. Weekday vs Weekend Paired Sleep Plot
+## 5. Weekday vs Weekend Paired Sleep Plot
 ```{r echo = TRUE}
 sleep_long <- bp_sleep_df |>
   select(seqn, coffee_group, sleep_weekday, sleep_weekend) |>
