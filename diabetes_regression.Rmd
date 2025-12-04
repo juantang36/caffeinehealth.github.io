@@ -1,0 +1,112 @@
+---
+title: "Regression"
+author: "Yurou Liu"
+date: "2025-12-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(patchwork)
+library(tidyverse)
+library(readr)
+library(haven)
+library(janitor)
+library(ggplot2)
+library(plotly)
+```
+
+```{r}
+# Data tidying
+analytic = read_csv("./analytic.csv")
+
+diabetes_rg = analytic |>
+  rename(
+    glycohemoglobin = lbxgh, 
+    insulin_uuml = lbxin, 
+    glucose_mgdl = lbxglu
+  ) |>
+  mutate(caffeine_mg = (dr1tcaff + dr2tcaff) / 2) %>% 
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    glycohemoglobin, 
+    insulin_uuml, 
+    glucose_mgdl, 
+    caffeine_mg
+  ) |>
+  dplyr::filter(
+    !is.na(glycohemoglobin), 
+    !is.na(insulin_uuml), 
+    !is.na(glucose_mgdl), 
+    coffee_habit_binary == "TRUE"
+  )
+
+# Regression model
+model_glyco = lm(glycohemoglobin ~ caffeine_mg, data = diabetes_rg)
+model_insulin = lm(insulin_uuml ~ caffeine_mg, data = diabetes_rg)
+model_glucose = lm(glucose_mgdl ~ caffeine_mg, data = diabetes_rg)
+
+summary(model_glyco)
+summary(model_insulin)
+summary(model_glucose)
+
+# Visuallizatoin
+glyco_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = glycohemoglobin)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = "Caffeine (mg)", y = "Glycohemoglobin (%)") + 
+  theme(plot.title = element_text(hjust = .5))
+
+insulin_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = insulin_uuml)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = "Caffeine (mg)", y = "Insulin (μU/mL)") + 
+  theme(plot.title = element_text(hjust = .5))
+
+glucose_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = glucose_mgdl)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = "Caffeine (mg)", y = "Glucose (mg/dL)") + 
+  theme(plot.title = element_text(hjust = .5))
+
+diabetes_rg_interactive = subplot(
+  ggplotly(glyco_rg, tooltip = "all"),
+  ggplotly(insulin_rg, tooltip = "all"),
+  ggplotly(glucose_rg, tooltip = "all"),
+  nrows = 1, 
+  titleX = TRUE, 
+  titleY = TRUE, 
+  margin = 0.05) %>% 
+  layout(
+    annotations = list(
+      list(
+        x = 0.16, y = 1.07,
+        text = "<b>Glycohemoglobin vs Caffeine</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.5, y = 1.07,
+        text = "<b>Insulin vs Caffeine</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.84, y = 1.07,
+        text = "<b>Glucose vs Caffeine</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      )
+    ),
+    margin = list(t = 80), 
+    showlegend = FALSE
+  ) 
+
+diabetes_rg_interactive
+
+```
