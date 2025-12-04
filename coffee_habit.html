@@ -350,7 +350,10 @@ table(analytic$coffee_habit_binary, useNA = &quot;ifany&quot;)</code></pre>
 ## FALSE  TRUE  &lt;NA&gt; 
 ##  3373  2416  6144</code></pre>
 <pre class="r"><code>analytic = analytic |&gt;
-  select(seqn, coffee_habit_binary, everything())</code></pre>
+  select(seqn, coffee_habit_binary, everything())
+
+# Save the updated file so git can track the change
+write.csv(analytic, &quot;analytic.csv&quot;, row.names = FALSE)</code></pre>
 </div>
 
 
