@@ -7,7 +7,6 @@ output: github_document
 library(tidyverse)
 library(ggridges)
 analytic = read_csv("./analytic.csv")
-
 ```
 
 
@@ -18,7 +17,7 @@ bp_sleep_df <- analytic |>
       coffee_habit_binary,
       levels = c(0, 1),
       labels = c("No coffee", "Coffee habit")
-    ),
+    ), 
 
     # Pressure
     sbp = rowMeans(across(c(bpxosy1, bpxosy2, bpxosy3)), na.rm = TRUE),
@@ -31,7 +30,8 @@ bp_sleep_df <- analytic |>
     sleep_weekday = sld012,
     sleep_weekend = sld013,
     sleep_avg = (sleep_weekday * 5 + sleep_weekend * 2) / 7
-  )
+  ) |> 
+   filter(!is.na(coffee_group))
 
 ```
 
