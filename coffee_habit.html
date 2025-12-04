@@ -348,11 +348,27 @@ class="section level4">
 table(analytic$coffee_habit_binary, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
 ## FALSE  TRUE  &lt;NA&gt; 
-##  3373  2416  6144</code></pre>
+##  1336  1775  3105</code></pre>
 <pre class="r"><code>analytic = analytic |&gt;
-  select(seqn, coffee_habit_binary, everything())
-
-# Save the updated file so git can track the change
+  select(seqn, coffee_habit_binary, everything())</code></pre>
+</div>
+<div id="filter-sequence-by-age-and-pregnancy-status"
+class="section level1">
+<h1>Filter sequence by age and pregnancy status</h1>
+<pre class="r"><code>analytic = analytic |&gt;
+  filter(
+    ridageyr &gt;= 20,
+    ridageyr &lt;= 70,
+    ridexprg != 1 | is.na(ridexprg)   # only remove pregnanted group
+  ) |&gt;
+  relocate(ridageyr, .after = coffee_habit_binary)
+nrow(analytic)</code></pre>
+<pre><code>## [1] 6216</code></pre>
+<pre class="r"><code>table(analytic$coffee_habit_binary, useNA = &quot;ifany&quot;)</code></pre>
+<pre><code>## 
+## FALSE  TRUE  &lt;NA&gt; 
+##  1336  1775  3105</code></pre>
+<pre class="r"><code># Save the updated file so git can track the change
 write.csv(analytic, &quot;analytic.csv&quot;, row.names = FALSE)</code></pre>
 </div>
 

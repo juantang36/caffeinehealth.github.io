@@ -25,7 +25,7 @@ coffee_code = coffee_foods |>
   pull(drxfdcd) |>
   unique()
 ```
- 
+
 #### Clean and tidy diet interview dataset
 ```{r tidy_diet_data}
 # import dataset
@@ -87,6 +87,19 @@ table(analytic$coffee_habit_binary, useNA = "ifany")
 
 analytic = analytic |>
   select(seqn, coffee_habit_binary, everything())
+```
+
+# Filter sequence by age and pregnancy status
+```{r age_preg}
+analytic = analytic |>
+  filter(
+    ridageyr >= 20,
+    ridageyr <= 70,
+    ridexprg != 1 | is.na(ridexprg)   # only remove pregnanted group
+  ) |>
+  relocate(ridageyr, .after = coffee_habit_binary)
+nrow(analytic)
+table(analytic$coffee_habit_binary, useNA = "ifany")
 
 # Save the updated file so git can track the change
 write.csv(analytic, "analytic.csv", row.names = FALSE)
