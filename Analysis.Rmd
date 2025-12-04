@@ -11,6 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Overview of analytic strategy
 In this analysis, we first compared individuals (age range: 20-70) with and without coffee intake habits based on the results of two 24-hour dietary recall surveys and experimental biomarker data. Subsequently, we employed regression models to investigate the dose-response relationship between caffeine intake and selected biomarkers.
 
@@ -21,6 +22,7 @@ We organized the analysis in two steps:
 
 
 ## Group Comparisons: Coffee Intake vs No Coffe Intake
+
 
 ### Coffee Intake and Blood Pressure & Pulse
 To assess whether habitual coffee consumption is related to blood pressure and pulse, we compared systolic blood pressure (SBP), diastolic blood pressure (DBP), and resting pulse between adults with and without coffee-drinking habits. The violin plots with embedded boxplots display the distributions of SBP and DBP by coffee habit, and a line plot shows group means with 95% confidence intervals. Pulse-rate distributions were visualized using ridgeline density plots.
@@ -52,3 +54,17 @@ From a diabetes-risk perspective, these findings suggest that habitual coffee in
 Moreover, these comparisons are unadjusted and may be strongly influenced by confounding. Coffee drinkers in NHANES are likely to differ from non-drinkers in age, BMI, smoking, overall diet, physical activity, and socioeconomic factors, all of which affect glycemic control and diabetes risk. Therefore, the current results should not be interpreted as strong causal evidence that coffee itself increases or decreases diabetes risk. Instead, they highlight distinct diabetes biomarker profiles—particularly lower fasting insulin—among coffee-habit groups and motivate the next step of our analysis: regression models and examine dose–response relationships between caffeine intake and diabetes-related outcomes.
 
 
+### Coffee Intake and Cardiovascular Disease Risk
+To evaluate whether habitual coffee consumption is associated with cardiovascular risk profiles, we compared three lipid biomarkers: high-density lipoprotein cholesterol (HDL), low-density lipoprotein cholesterol (LD), and total cholesterol, between adults with and without coffee intake habit. The violin plot with embedded boxplot display the distributions of each biomarker by coffee habit, and a summary table reports group means, mean differences, 95% confidence intervals, and p-values from two-sample t-tests.
+
+Coffee drinkers had higher average levels of all three lipid markers, although the strength of evidence varied by biomarker.
+
+- HDL (“good” cholesterol): Mean HDL was 53.45 mg/dL in non-drinkers and 56.32 mg/dL in coffee drinkers, with a mean difference of 2.87 mg/dL (95% CI: 1.39, 4.35; p ≈ 0.00015). This indicates a statistically significant and modestly higher HDL-C level among coffee drinkers.
+
+- LDL: Mean LDL-C was 112.17 mg/dL in the No coffee group and 115.52 mg/dL in the Coffee habit group, for a difference of 3.36 mg/dL (95% CI: –0.22, 6.94; p ≈ 0.066). The confidence interval includes zero and the p-value is slightly above 0.05, suggesting only weak evidence for higher LDL-C in coffee drinkers.
+
+- Total cholesterol: Mean total cholesterol was 187.33 mg/dL among non-drinkers and 193.80 mg/dL among coffee drinkers, with a mean difference of 6.47 mg/dL (95% CI: 2.28, 10.65; p ≈ 0.0025), indicating a statistically significant but modest increase in total cholesterol associated with coffee habit.
+
+From a CVD-risk perspective, this pattern is somewhat mixed but not clearly adverse. The higher HDL among coffee drinkers is generally considered protective, as higher HDL is associated with lower cardiovascular risk. At the same time, coffee drinkers also show slightly higher total cholesterol and possibly higher LDL-C, though the LDL difference is small and only borderline significant. The absolute differences in LDL-C and total cholesterol (≈3–6 mg/dL) are relatively modest compared with clinical thresholds used to define dyslipidemia, so their practical impact on risk is likely limited in isolation.
+
+As with other outcomes in this study, these comparisons are cross-sectional and unadjusted. Coffee drinkers may differ from non-drinkers in diet, BMI, smoking, alcohol use, physical activity, and use of lipid-lowering medications, all of which strongly influence lipid levels. Consequently, the observed associations should not be interpreted as causal effects of coffee itself on CVD risk. Rather, they highlight that adults with a coffee habit in NHANES tend to have a lipid profile characterized by higher HDL and slightly higher total cholesterol, a combination whose net impact on cardiovascular risk is uncertain and warrants further evaluation in adjusted regression models and longitudinal studies.
