@@ -297,9 +297,9 @@ gg_bp_violin &lt;- ggplot(bp_long,
   theme_minimal(base_size = 13) +
   theme(legend.position = &quot;none&quot;)
 gg_bp_violin</code></pre>
-<pre><code>## Warning: Removed 8830 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 2980 rows containing non-finite outside the scale range
 ## (`stat_ydensity()`).</code></pre>
-<pre><code>## Warning: Removed 8830 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 2980 rows containing non-finite outside the scale range
 ## (`stat_boxplot()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 The distributions of systolic and diastolic blood pressure among groups
@@ -371,8 +371,8 @@ whole.</p>
   theme_minimal(base_size = 13) +
   theme(legend.position = &quot;none&quot;)
 gg_pulse_ridge</code></pre>
-<pre><code>## Picking joint bandwidth of 2.29</code></pre>
-<pre><code>## Warning: Removed 4415 rows containing non-finite outside the scale range
+<pre><code>## Picking joint bandwidth of 2.48</code></pre>
+<pre><code>## Warning: Removed 1490 rows containing non-finite outside the scale range
 ## (`stat_density_ridges()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 The ridgeline density plot visualizes pulse-rate distributions across
@@ -393,9 +393,9 @@ provides an intuitive sense of how pulse varies across the cohort.</p>
   theme_minimal(base_size = 13) +
   theme(legend.position = &quot;none&quot;)
 gg_sleep_violin</code></pre>
-<pre><code>## Warning: Removed 3574 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 101 rows containing non-finite outside the scale range
 ## (`stat_ydensity()`).</code></pre>
-<pre><code>## Warning: Removed 3574 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 101 rows containing non-finite outside the scale range
 ## (`stat_boxplot()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 This visualization shows the distribution of average daily sleep time
@@ -433,11 +433,11 @@ gg_sleep_paired &lt;-
        title = &quot;Weekday vs weekend sleep by coffee habit&quot;) +
   theme_minimal(base_size = 13)
 gg_sleep_paired</code></pre>
-<pre><code>## Warning: Removed 7091 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 161 rows containing non-finite outside the scale range
 ## (`stat_summary()`).
-## Removed 7091 rows containing non-finite outside the scale range
+## Removed 161 rows containing non-finite outside the scale range
 ## (`stat_summary()`).</code></pre>
-<pre><code>## Warning: Removed 7091 rows containing missing values or values outside the scale range
+<pre><code>## Warning: Removed 161 rows containing missing values or values outside the scale range
 ## (`geom_line()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 Individual differences in sleep duration on weekdays and weekends are
