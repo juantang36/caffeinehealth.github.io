@@ -1,0 +1,75 @@
+---
+title: "coffee_cvd_plot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readr)
+library(haven)
+library(janitor)
+library(ggplot2)
+library(plotly)
+analytic = read_csv("./analytic.csv")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Clean and tidy CVD data
+```{r tidy_cvd_data}
+cvd_df = analytic |>
+  rename(
+    total_cholesterol = lbxtc, # unit = mg/dl
+    hdl = lbdhdd, # good cholesterol, unit = mg/dl
+    ldl = lbdldlm # bad cholesterol, unit = mg/dl (Martin-Hopkins)
+  ) |>
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    hdl, 
+    ldl, 
+    total_cholesterol
+  ) |>
+  filter(
+    !is.na(hdl), 
+    !is.na(ldl), 
+    !is.na(total_cholesterol)
+  )
+```
+
+#### Coffee_CVD_biomarkers plot
+```{r cvd_plot}
+# make a tidy long dataset for plotting
+cvd_long = cvd_df |>
+  filter(!is.na(coffee_habit_binary)) |>
+  mutate(
+    coffee_habit = if_else(coffee_habit_binary, "Coffee both days", "No coffee"),
+    coffee_habit = factor(coffee_habit, levels = c("No coffee", "Coffee both days"))
+  ) |>
+  pivot_longer(
+    cols = c(hdl, ldl, total_cholesterol),
+    names_to = "biomarker",
+    values_to = "value"
+  )
+
+# ggplot: violin + boxplot, faceted by biomarker
+p = ggplot(cvd_long, aes(x = coffee_habit, y = value, fill = coffee_habit)) +
+  geom_violin(trim = FALSE, alpha = 0.6) +
+  geom_boxplot(width = 0.15, outlier.alpha = 0.3) +
+  facet_wrap(~ biomarker, scales = "free_y") +
+  labs(
+    x = "Coffee habit",
+    y = "Biomarker level (mg/dL)",
+    title = "CVD biomarkers by coffee habit"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 20, hjust = 1)
+  )
+
+# turn into interactive plot
+ggplotly(p)
+
+```
+
+

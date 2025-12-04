@@ -87,6 +87,9 @@ table(analytic$coffee_habit_binary, useNA = "ifany")
 
 analytic = analytic |>
   select(seqn, coffee_habit_binary, everything())
+
+# Save the updated file so git can track the change
+write.csv(analytic, "analytic.csv", row.names = FALSE)
 ```
 
 
