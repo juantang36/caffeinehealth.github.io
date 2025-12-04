@@ -1,0 +1,42 @@
+---
+title: "coffee_diabetes"
+output: html_document
+date: "2025-12-03"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readr)
+library(haven)
+library(janitor)
+library(ggplot2)
+library(plotly)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Create diabetes dataset
+```{r}
+# clean and tidy data
+diabetes_df = analytic |>
+  rename(
+    glycohemoglobin = lbxgh, 
+    insulin_uuml = lbxin, 
+    glucose_mgdl = lbxglu
+  ) |>
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    glycohemoglobin, 
+    insulin_uuml, 
+    glucose_mgdl
+  ) |>
+  filter(
+    !is.na(glycohemoglobin), 
+    !is.na(insulin_uuml), 
+    !is.na(glucose_mgdl)
+  )
+```
+
+#### Plot
+
+
