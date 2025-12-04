@@ -42,9 +42,8 @@ diabetes_df = analytic |>
 diabetes_long <- diabetes_df |>
   filter(!is.na(coffee_habit_binary)) |>
   mutate(
-    coffee_habit = if_else(coffee_habit_binary, "Coffee both days", "No coffee"), 
-    ,
-    coffee_habit = factor(coffee_habit, levels = c("No coffee", "Coffee both days"))
+    coffee_habit = if_else(coffee_habit_binary, "Yes", "No"),
+coffee_habit = factor(coffee_habit, levels = c("No", "Yes"))
   ) |>
   select(coffee_habit, glycohemoglobin, insulin_uuml, glucose_mgdl) |>
   pivot_longer(
@@ -79,5 +78,4 @@ p <- ggplot(summary_df,
   )
 ggplotly(p)
 ```
-
 
