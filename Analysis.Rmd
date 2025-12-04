@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Overview of analytic strategy
-In this analysis, we first compared individuals (age range: 20-70) with and without coffee-drinking habits based on the results of two 24-hour dietary recall surveys and experimental biomarker data. Subsequently, we employed regression models to investigate the dose-response relationship between caffeine intake and selected biomarkers.
+In this analysis, we first compared individuals (age range: 20-70) with and without coffee intake habits based on the results of two 24-hour dietary recall surveys and experimental biomarker data. Subsequently, we employed regression models to investigate the dose-response relationship between caffeine intake and selected biomarkers.
 
 We organized the analysis in two steps: 
 
@@ -33,7 +33,13 @@ From a cardiovascular-risk perspective, mean SBP and DBP in both groups fall wit
 
 
 ### Coffee Intake and Sleep Status
+To explore whether habitual coffee consumption is related to sleep, we compared self-reported sleep duration between adults with and without coffee-intake habits. Average nightly sleep time was summarized using violin plots with embedded boxplots, and a paired line plot was used to display within-person differences between weekday and weekend sleep by coffee habit.
 
+The violin plots show that the overall distributions of average sleep duration are very similar in coffee drinkers and non-drinkers. Both groups cluster around roughly 7–8 hours of sleep per night, with a comparable spread and long tails toward shorter and longer sleep. The coffee-habit group appears to sleep slightly fewer hours on average, but the central ranges of the two distributions overlap extensively, suggesting that any difference in mean sleep time between coffee drinkers and non-drinkers is relatively small.
+
+The paired weekday–weekend plot highlights within-person patterns. In coffee intake groups, individuals tend to sleep more on weekends than on weekdays, consistent with “catch-up” sleep. The black summary lines indicate that the magnitude of the weekday–weekend increase is nearly the same for coffee drinkers and non-drinkers, implying that habitual coffee use does not materially alter the typical pattern of shorter weekday sleep and longer weekend sleep.
+
+Taken together, these descriptive results do not suggest that regular coffee consumption is associated with large reductions in average sleep duration or with a different pattern of weekday versus weekend sleep in this NHANES adult sample. If anything, coffee drinkers may sleep marginally less on average, but the between-group differences are modest relative to the wide variability in sleep across individuals. As with other outcomes, these cross-sectional comparisons rely on self-reported sleep and are unadjusted for potential confounders (e.g., work schedules, shift work, stress, mental health), and thus should be interpreted cautiously as descriptive rather than causal.
 
 
 ### Coffee Intake and Diabetes Risk
