@@ -10,6 +10,7 @@ library(haven)
 library(janitor)
 library(ggplot2)
 library(plotly)
+library(ggpubr)
 analytic = read_csv("./analytic.csv")
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -60,7 +61,22 @@ p = ggplot(cvd_long, aes(x = coffee_habit, y = value, fill = coffee_habit)) +
     x = "Coffee habit",
     y = "Biomarker level (mg/dL)",
     title = "CVD biomarkers by coffee habit"
-  ) +
+  ) + 
+  stat_compare_means(
+    method = "t.test",
+    method.args = list(paired = FALSE), 
+    label = "p.format",
+    comparisons = list(c("Coffee both days", "No coffee")),
+    label.y.npc = "top",
+    vjust = -0.5,
+    size = 3
+  ) + 
+  facet_wrap(~ biomarker, scales = "free_y") +
+  labs(
+    x = "Coffee habit",
+    y = "Biomarker level (mg/dL)",
+    title = "CVD biomarkers by coffee habit"
+  ) + 
   theme_minimal() +
   theme(
     legend.position = "none",
@@ -68,7 +84,21 @@ p = ggplot(cvd_long, aes(x = coffee_habit, y = value, fill = coffee_habit)) +
   )
 
 # turn into interactive plot
-ggplotly(p)
+p_interactive = ggplotly(p)
+p_interactive = p_interactive %>% 
+    layout(
+    annotations = list(
+      list(
+        x = 0.5, y = 1.02,
+        text = " p=1.5e-08***                                                    p=4.5e-05***                                                     p=1.6e-09***",
+        xref = "paper", yref = "paper",
+        showarrow = FALSE,
+        font = list(size = 10)
+      )
+    )
+  )
+
+p_interactive
 
 ```
 
