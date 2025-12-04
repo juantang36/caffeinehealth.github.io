@@ -56,7 +56,7 @@ summary(model_glucose)
 glyco_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = glycohemoglobin)) +
   geom_point(size = .8, alpha = .5, color = "gray30") +
   geom_smooth(method = "lm", se = TRUE, size = .8) +
-  labs(title = "diabetes biomarkers vs caffeine intake", x = "Caffeine (mg)", y = "Glycohemoglobin (%)") + 
+  labs(title = "Diabetes biomarkers vs caffeine intake", x = "Caffeine (mg)", y = "Glycohemoglobin (%)") + 
   theme(plot.title = element_text(hjust = .5))
 
 insulin_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = insulin_uuml)) +
