@@ -11,6 +11,7 @@ library(haven)
 library(janitor)
 library(ggplot2)
 library(plotly)
+analytic = read_csv("./analytic.csv")
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -38,5 +39,44 @@ diabetes_df = analytic |>
 ```
 
 #### Plot
+```{r bar_chart}
+diabetes_long <- diabetes_df |>
+  filter(!is.na(coffee_habit_binary)) |>
+  mutate(
+    coffee_habit = if_else(coffee_habit_binary, "Yes", "No")
+  ) |>
+  select(coffee_habit, glycohemoglobin, insulin_uuml, glucose_mgdl) |>
+  pivot_longer(
+    cols = c(glycohemoglobin, insulin_uuml, glucose_mgdl),
+    names_to = "biomarker",
+    values_to = "value"
+  )
+
+summary_df <- diabetes_long |>
+  group_by(coffee_habit, biomarker) |>
+  summarize(
+    mean_value = mean(value, na.rm = TRUE),
+    se = sd(value, na.rm = TRUE) / sqrt(sum(!is.na(value))),
+    n = sum(!is.na(value)),
+    .groups = "drop")
+p <- ggplot(summary_df,
+            aes(x = coffee_habit, y = mean_value, fill = coffee_habit)) +
+  geom_col(width = 0.6) +
+  geom_errorbar(aes(ymin = mean_value - 1.96 * se,
+                    ymax = mean_value + 1.96 * se),
+                width = 0.15) +
+  facet_wrap(~ biomarker, scales = "free_y") +
+  labs(
+    x = "Coffee habit",
+    y = "Mean diabetes biomarker level",
+    fill = "Coffee habit"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 20, hjust = 1)
+  )
+ggplotly(p)
+```
 
 

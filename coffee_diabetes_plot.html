@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2025-12-03" />
+
+<title>coffee_diabetes</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="proposal.html">Proposal</a>
+</li>
+<li>
+  <a href="https://github.com/juantang36/caffeinehealth.github.io.git">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">coffee_diabetes</h1>
+<h4 class="date">2025-12-03</h4>
+
+</div>
+
+
+<div id="create-diabetes-dataset" class="section level4">
+<h4>Create diabetes dataset</h4>
+<pre class="r"><code># clean and tidy data
+diabetes_df = analytic |&gt;
+  rename(
+    glycohemoglobin = lbxgh, 
+    insulin_uuml = lbxin, 
+    glucose_mgdl = lbxglu
+  ) |&gt;
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    glycohemoglobin, 
+    insulin_uuml, 
+    glucose_mgdl
+  ) |&gt;
+  filter(
+    !is.na(glycohemoglobin), 
+    !is.na(insulin_uuml), 
+    !is.na(glucose_mgdl)
+  )</code></pre>
+</div>
+<div id="plot" class="section level4">
+<h4>Plot</h4>
+<pre class="r"><code>diabetes_long &lt;- diabetes_df |&gt;
+  filter(!is.na(coffee_habit_binary)) |&gt;
+  mutate(
+    coffee_habit = if_else(coffee_habit_binary, &quot;Yes&quot;, &quot;No&quot;)
+  ) |&gt;
+  select(coffee_habit, glycohemoglobin, insulin_uuml, glucose_mgdl) |&gt;
+  pivot_longer(
+    cols = c(glycohemoglobin, insulin_uuml, glucose_mgdl),
+    names_to = &quot;biomarker&quot;,
+    values_to = &quot;value&quot;
+  )
+
+summary_df &lt;- diabetes_long |&gt;
+  group_by(coffee_habit, biomarker) |&gt;
+  summarize(
+    mean_value = mean(value, na.rm = TRUE),
+    se = sd(value, na.rm = TRUE) / sqrt(sum(!is.na(value))),
+    n = sum(!is.na(value)),
+    .groups = &quot;drop&quot;)
+p &lt;- ggplot(summary_df,
+            aes(x = coffee_habit, y = mean_value, fill = coffee_habit)) +
+  geom_col(width = 0.6) +
+  geom_errorbar(aes(ymin = mean_value - 1.96 * se,
+                    ymax = mean_value + 1.96 * se),
+                width = 0.15) +
+  facet_wrap(~ biomarker, scales = &quot;free_y&quot;) +
+  labs(
+    x = &quot;Coffee habit&quot;,
+    y = &quot;Mean diabetes biomarker level&quot;,
+    fill = &quot;Coffee habit&quot;
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = &quot;none&quot;,
+    axis.text.x = element_text(angle = 20, hjust = 1)
+  )
+ggplotly(p)</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-7059e0f5a46d1cdbcb51" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-7059e0f5a46d1cdbcb51">{"x":{"data":[{"orientation":"v","width":0.60000000000000009,"base":0,"x":[1],"y":[105.67741935483872],"text":"coffee_habit: No<br />mean_value: 105.677419<br />coffee_habit: No","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"No","legendgroup":"No","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.60000000000000009,"base":0,"x":[1],"y":[5.6047898338220916],"text":"coffee_habit: No<br />mean_value:   5.604790<br />coffee_habit: No","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"No","legendgroup":"No","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.60000000000000009,"base":0,"x":[1],"y":[17.095728250244381],"text":"coffee_habit: No<br />mean_value:  17.095728<br />coffee_habit: No","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"No","legendgroup":"No","showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.59999999999999987,"base":0,"x":[2],"y":[109.9328125],"text":"coffee_habit: Yes<br />mean_value: 109.932812<br />coffee_habit: Yes","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Yes","legendgroup":"Yes","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.59999999999999987,"base":0,"x":[2],"y":[5.7876562500000004],"text":"coffee_habit: Yes<br />mean_value:   5.787656<br />coffee_habit: Yes","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Yes","legendgroup":"Yes","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.59999999999999987,"base":0,"x":[2],"y":[12.294765625],"text":"coffee_habit: Yes<br />mean_value:  12.294766<br />coffee_habit: Yes","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Yes","legendgroup":"Yes","showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"x":[1],"y":[105.67741935483872],"text":"coffee_habit: No<br />mean_value: 105.677419<br />coffee_habit: No<br />mean_value - 1.96 * se: 103.776918<br />mean_value + 1.96 * se: 107.577921","type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[1.9005011657631883],"arrayminus":[1.9005011657631883],"type":"data","width":11.454545454545448,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"No","legendgroup":"No","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1],"y":[5.6047898338220916],"text":"coffee_habit: No<br />mean_value:   5.604790<br />coffee_habit: No<br />mean_value - 1.96 * se:   5.547767<br />mean_value + 1.96 * se:   5.661812","type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[0.057022521057258579],"arrayminus":[0.057022521057258579],"type":"data","width":11.454545454545448,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"No","legendgroup":"No","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1],"y":[17.095728250244381],"text":"coffee_habit: No<br />mean_value:  17.095728<br />coffee_habit: No<br />mean_value - 1.96 * se:  15.119288<br />mean_value + 1.96 * se:  19.072169","type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[1.9764403047769683],"arrayminus":[1.9764403047769665],"type":"data","width":11.454545454545448,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"No","legendgroup":"No","showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"x":[2],"y":[109.9328125],"text":"coffee_habit: Yes<br />mean_value: 109.932812<br />coffee_habit: Yes<br />mean_value - 1.96 * se: 108.218633<br />mean_value + 1.96 * se: 111.646992","type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[1.7141790014079987],"arrayminus":[1.7141790014079987],"type":"data","width":11.454545454545487,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"Yes","legendgroup":"Yes","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2],"y":[5.7876562500000004],"text":"coffee_habit: Yes<br />mean_value:   5.787656<br />coffee_habit: Yes<br />mean_value - 1.96 * se:   5.731713<br />mean_value + 1.96 * se:   5.843600","type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[0.055943412591663133],"arrayminus":[0.055943412591663133],"type":"data","width":11.454545454545487,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"Yes","legendgroup":"Yes","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[2],"y":[12.294765625],"text":"coffee_habit: Yes<br />mean_value:  12.294766<br />coffee_habit: Yes<br />mean_value - 1.96 * se:  11.552076<br />mean_value + 1.96 * se:  13.037455","type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[0.74268946743775821],"arrayminus":[0.74268946743775821],"type":"data","width":11.454545454545487,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"Yes","legendgroup":"Yes","showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":39.910336239103373,"r":7.9701120797011216,"b":45.643013805197853,"l":40.647571606475722},"font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241},"xaxis":{"domain":[0,0.30249659016782304],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,2.6000000000000001],"tickmode":"array","ticktext":["No","Yes"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["No","Yes"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505603,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-20,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"y","title":"","hoverformat":".2f"},"annotations":[{"text":"Coffee habit","x":0.5,"y":0,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis","yshift":-25.717733605945043},{"text":"Mean diabetes biomarker level","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-23.910336239103373},{"text":"glucose_mgdl","x":0.15124829508391152,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":12.7521793275218},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"glycohemoglobin","x":0.49999999999999994,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":12.7521793275218},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"insulin_uuml","x":0.84875170491608842,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":12.7521793275218},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-5.5823495750704,117.22934107647839],"tickmode":"array","ticktext":["0","30","60","90"],"tickvals":[0,30.000000000000004,59.999999999999993,90],"categoryorder":"array","categoryarray":["0","30","60","90"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919289,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0,"x1":0.30249659016782304,"y0":0,"y1":1},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0,"x1":0.30249659016782304,"y0":0,"y1":25.5043586550436,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0.36417007649884359,"x1":0.6358299235011563,"y0":0,"y1":1},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0.36417007649884359,"x1":0.6358299235011563,"y0":0,"y1":25.5043586550436,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0.69750340983217696,"x1":1,"y0":0,"y1":1},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0.69750340983217696,"x1":1,"y0":0,"y1":25.5043586550436,"yanchor":1,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[0.40000000000000002,2.6000000000000001],"tickmode":"array","ticktext":["No","Yes"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["No","Yes"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505603,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-20,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.36417007649884359,0.6358299235011563],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[-0.29217998312958321,6.1357796457212466],"tickmode":"array","ticktext":["0","2","4","6"],"tickvals":[0,1.9999999999999998,4,6],"categoryorder":"array","categoryarray":["0","2","4","6"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919289,"zeroline":false,"anchor":"x2","title":"","hoverformat":".2f"},"xaxis3":{"type":"linear","autorange":false,"range":[0.40000000000000002,2.6000000000000001],"tickmode":"array","ticktext":["No","Yes"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["No","Yes"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505603,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-20,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.69750340983217696,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"yaxis3":{"type":"linear","autorange":false,"range":[-0.95360842775106747,20.025776982772417],"tickmode":"array","ticktext":["0","5","10","15","20"],"tickvals":[0,4.9999999999999991,10,14.999999999999998,20],"categoryorder":"array","categoryarray":["0","5","10","15","20"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919289,"zeroline":false,"anchor":"x3","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"eff24476c436":{"x":{},"y":{},"fill":{},"type":"bar"},"eff2514bd857":{"x":{},"y":{},"fill":{},"ymin":{},"ymax":{}}},"cur_data":"eff24476c436","visdat":{"eff24476c436":["function (y) ","x"],"eff2514bd857":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

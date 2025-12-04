@@ -10,8 +10,10 @@ library(janitor)
 
 analytic = read.csv("./analytic.csv")
 
-individual_foods_1 <- read_xpt_clean("./Individual_Foods_1.xpt")
-individual_foods_2 <- read_xpt_clean("./Individual_Foods_2.xpt")
+individual_foods_1 <- read_xpt("./Individual_Foods_1.xpt") |>
+  janitor::clean_names()
+individual_foods_2 <- read_xpt("./Individual_Foods_2.xpt") |>
+  janitor::clean_names()
 
 
 
