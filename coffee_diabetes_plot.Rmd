@@ -50,7 +50,13 @@ coffee_habit = factor(coffee_habit, levels = c("No", "Yes"))
     cols = c(glycohemoglobin, insulin_uuml, glucose_mgdl),
     names_to = "biomarker",
     values_to = "value"
-  )
+  ) |>
+  mutate(
+    biomarker = factor(
+      biomarker, 
+      levels = c("glycohemoglobin", "insulin_uuml", "glucose_mgdl"), 
+      labels = c("Glycohemoglobin (%)", "Insulin (mu/ml)", "Glucose (mg/dL)")
+    ))
 
 summary_df <- diabetes_long |>
   group_by(coffee_habit, biomarker) |>
@@ -80,9 +86,12 @@ ggplotly(p)
 ```
 
 #### Two-sample t-test
-outcome/biomarkers: 
-- Glycohemoglobin
-- Insulin (uu/ml)
+Outcome/biomarkers: 
+
+- Glycohemoglobin (%)
+
+- Insulin (mu/mL)
+
 - Glucose (mg/dL)
 
 H_0: mean biomarker is the same in coffee vs. no-coffee
@@ -134,8 +143,7 @@ The mean difference (Yes − No) was  **`r round(ttest_results_clean$diff_mean[t
 This indicates no statistically significant in fasting glucose among coffee drinkers. Fails to reject the null hypothesis.
 
 **Glycohemoglobin (HbA1c):**  
-HbA1c averaged `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`% in the No group and  
-`r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`% in the Yes group.  
+HbA1c averaged `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`% in the No group and  `r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`% in the Yes group.  
 The mean difference was **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`%**  (95% CI:  `r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`,  `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`)  with a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="glycohemoglobin"], 3)`.  
 Large p-value suggests no statistically significant difference in HbA1c between coffee and non-coffee drinkers. Fails to reject the null hypothesis.
 
