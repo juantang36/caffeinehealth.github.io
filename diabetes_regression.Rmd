@@ -1,7 +1,5 @@
 ---
 title: "Regression"
-author: "Yurou Liu"
-date: "2025-12-04"
 output: html_document
 ---
 
@@ -62,14 +60,12 @@ glyco_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = glycohemoglobin)) +
 insulin_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = insulin_uuml)) +
   geom_point(size = .8, alpha = .5, color = "gray30") +
   geom_smooth(method = "lm", se = TRUE, size = .8) +
-  labs(x = "Caffeine (mg)", y = "Insulin (μU/mL)") + 
-  theme(plot.title = element_text(hjust = .5))
+  labs(x = "Caffeine (mg)", y = "Insulin (μU/mL)") 
 
 glucose_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = glucose_mgdl)) +
   geom_point(size = .8, alpha = .5, color = "gray30") +
   geom_smooth(method = "lm", se = TRUE, size = .8) +
-  labs(x = "Caffeine (mg)", y = "Glucose (mg/dL)") + 
-  theme(plot.title = element_text(hjust = .5))
+  labs(x = "Caffeine (mg)", y = "Glucose (mg/dL)")
 
 diabetes_rg_interactive = subplot(
   ggplotly(glyco_rg, tooltip = "all"),
