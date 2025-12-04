@@ -1,0 +1,26 @@
+---
+title: "Analysis"
+output: 
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview of analytic strategy
+In this analysis, we first compared individuals with and without coffee-drinking habits based on the results of two 24-hour dietary recall surveys and experimental biomarker data. Subsequently, we employed regression models to investigate the dose-response relationship between caffeine intake and selected biomarkers.
+
+We organized the analysis in two steps: (1)  comparison between groups of individuals with and without coffee-intake habits, and (2) regression analyses with continuous caffeine intake as the exposure.
+
+
+## Group Comparisons: Coffee Intake vs No Coffe Intake
+### Coffee Intake and Diabetes Risk
+
+
+
+
+
