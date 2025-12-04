@@ -12,14 +12,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Overview of analytic strategy
-In this analysis, we first compared individuals with and without coffee-drinking habits based on the results of two 24-hour dietary recall surveys and experimental biomarker data. Subsequently, we employed regression models to investigate the dose-response relationship between caffeine intake and selected biomarkers.
+In this analysis, we first compared individuals (age range: 20-70) with and without coffee-drinking habits based on the results of two 24-hour dietary recall surveys and experimental biomarker data. Subsequently, we employed regression models to investigate the dose-response relationship between caffeine intake and selected biomarkers.
 
 We organized the analysis in two steps: (1)  comparison between groups of individuals with and without coffee-intake habits, and (2) regression analyses with continuous caffeine intake as the exposure.
 
 
 ## Group Comparisons: Coffee Intake vs No Coffe Intake
 ### Coffee Intake and Diabetes Risk
+Among participants with complete diabetes biomarker data (N = 3481), we compared fasting glucose, glycohemoglobin (HbA1c), and fasting insulin between adults with and without coffee intake habit. The bar plot shows mean biomarker levels with 95% confidence intervals by coffee habit, and the table summarizes group means, mean differences, confidence intervals, and p-values.
 
+Across the three biomarkers, coffee drinkers showed slightly higher fasting glucose and HbA1c but substantially lower fasting insulin than non-drinkers. Fasting glucose was about 4 mg/dL higher and HbA1c about 0.18 percentage points higher in the coffee group, with narrow confidence intervals and small p-values, indicating that these differences are unlikely to be due to sampling variation alone. However, the absolute magnitudes are modest and both group means remain largely within the normal to prediabetes range. In contrast, fasting insulin was roughly 5 μU/mL lower among coffee drinkers, representing a relatively larger difference on the insulin scale.
+
+From a diabetes-risk perspective, this pattern is mixed. On one hand, higher glucose and HbA1c suggest that, on average, coffee drinkers may be slightly closer to the glycemic thresholds that define prediabetes or diabetes, which could be interpreted as a less favorable profile. On the other hand, lower fasting insulin at similar or only slightly higher glucose levels is consistent with either improved insulin sensitivity (requiring less insulin to maintain glucose) or reduced β-cell secretory capacity.
+
+Moreover, these comparisons may be strongly influenced by confounding. Coffee drinkers in NHANES are likely to differ from non-drinkers in age, BMI, smoking, overall diet, physical activity, and socioeconomic factors, all of which affect glycemic control and diabetes risk. Therefore, the current results should not be interpreted as strong evidence that coffee itself increases or decreases diabetes risk. But they highlight modest differences in diabetes biomarker profiles between coffee-habit groups and motivate the next step of our analysis—regression models and examine dose–response relationships between caffeine intake and diabetes outcomes.
 
 
 
