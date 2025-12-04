@@ -79,3 +79,67 @@ p <- ggplot(summary_df,
 ggplotly(p)
 ```
 
+#### Two-sample t-test
+outcome/biomarkers: 
+- Glycohemoglobin
+- Insulin (uu/ml)
+- Glucose (mg/dL)
+
+H_0: mean biomarker is the same in coffee vs. no-coffee
+H_1: mean biomarkers is different between the two groups
+```{r t_test}
+# run two-sample t-tests by biomarker
+ttest_results = diabetes_long |>
+  group_by(biomarker) |>
+  group_modify(~ broom::tidy(t.test(value ~ coffee_habit, data = .x))) |>
+  ungroup()
+
+# clean up column names
+ttest_results_clean = ttest_results |>
+  transmute(
+    biomarker,
+    mean_no = estimate1,
+    mean_yes = estimate2,
+    diff_mean = estimate2 - estimate1,
+    ci_low = -conf.high,
+    ci_high = -conf.low,
+    p_value = p.value
+  )
+
+# tidy the test result
+ttest_results_clean |>
+  mutate(
+    across(
+      c(mean_no, mean_yes, diff_mean, ci_low, ci_high),
+      ~ round(.x, 2)
+    ),
+    p_value = signif(p_value, 3)
+  ) |>
+  knitr::kable(
+    caption = "Difference in mean diabetes biomarkers between coffee habit groups"
+  )
+```
+
+Among participants with complete diabetes biomarker data (N = `r nrow(diabetes_df)`), we compared
+glycohemoglobin, fasting glucose, and insulin levels between those who drank coffee on both recall days (with coffee habit)
+and those who did not drink coffee (without coffee habit).
+
+#### Results: Diabetes Biomarkers and Coffee Consumption
+
+We compared fasting glucose, glycohemoglobin (HbA1c), and fasting insulin between adults who did not drink coffee (“No”) and those who drank coffee on both days (“Yes”).
+
+**Fasting glucose:**  
+The mean fasting glucose level was `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="glucose_mgdl"], 2)` mg/dL in the no_coffee group and `r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="glucose_mgdl"], 2)` mg/dL in the coffee group.  
+The mean difference (Yes − No) was  **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="glucose_mgdl"], 2)` mg/dL** with a 95% CI of  (`r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="glucose_mgdl"], 2)`, `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="glucose_mgdl"], 2)`)  and a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="glucose_mgdl"], 3)`.  
+This indicates a statistically significant increase in fasting glucose among coffee drinkers.
+
+**Glycohemoglobin (HbA1c):**  
+HbA1c averaged `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`% in the No group and  
+`r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`% in the Yes group.  
+The mean difference was **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`%**  (95% CI:  `r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`,  `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="glycohemoglobin"], 2)`)  with a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="glycohemoglobin"], 3)`.  
+This small but statistically significant increase suggests slightly higher HbA1c in coffee drinkers.
+
+**Fasting insulin:**  
+The mean insulin level was  `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="insulin_uuml"], 2)` μU/mL in the No group and `r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="insulin_uuml"], 2)` μU/mL in the Yes group.  
+The mean difference (Yes − No) was  **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="insulin_uuml"], 2)` μU/mL**  with a 95% CI of (`r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="insulin_uuml"], 2)`, `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="insulin_uuml"], 2)`)  and a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="insulin_uuml"], 3)`.  
+This reflects a statistically significant decrease in fasting insulin among coffee drinkers.
