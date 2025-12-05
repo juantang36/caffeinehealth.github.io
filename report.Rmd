@@ -23,3 +23,53 @@ Disheng Jiang (dj2763), Juan Tang (jt3649), Ruhui Shen (rs4788), Yurou Liu (yl61
 Coffee, as one of the most popular beverages in the world, is highly favored by people. Since the caffeine in coffee has a regulatory effect on the central nervous system (Herqutanto et al., 2024), coffee is widely consumed for alertness. The debate over whether coffee is beneficial or harmful to human health is long standing. Some researchers suggest that moderate coffee consumption may help reduce the risk of type 2 diabetes and cardiovascular disease, and may be associated with anti-inflammatory and antioxidant effects (Barrea et al., 2023). However, other studies indicate that coffee intake could potentially increase the risk of certain cancers and fractures (Asoudeh et al., 2023; Carter et al., 2022). We wanted to explore the relationship between coffee intake and health through the analysis of large amounts of data and identify a reasonable intake level.
 
 NHANES is uniquely well-suited for this study. NHANES contains nationally representative sampling with detailed, standardized measurements that are directly relevant to caffeine. It also contains clinically measured outcomes like blood pressure, pulse and BMI, meanwhile providing rich covariates such as age, sex, physical activity, and socioeconomic markers. By utilizing the abundant raw data, we can learn about the effect of coffee on human health and dose-response patterns through data analysis and draw transparent and reproducible public health inferences.
+
+
+## Related work
+Our interest in coffee and health grew from prior coursework and lived experience. One member of our group studied food science as an undergraduate and had previously participated in a simple discussion about whether coffee is beneficial to health. Coffee is one of the most popular beverages among young people, and we are all very interested in this topic. As students in the School of Public Health, we have a strong desire to explore health-related issues. Therefore, when we received this project assignment, we believed it to be an excellent opportunity to apply our knowledge of statistics and data science to further investigate the questions on our minds.
+
+
+## Initial questions
+
+
+## Data
+
+
+## Exploratory analysis
+### Group Comparisons: Coffee Intake vs No Coffe Intake
+
+#### Blood Pressure & Pulse
+
+
+#### Sleep Status
+
+
+#### Diabetes Risk
+
+
+#### Cardiovascular Disease Risk
+
+
+
+
+## Regression Analysis
+
+#### Blood Pressure & Pulse
+
+
+#### Sleep Status
+
+
+#### Diabetes Risk
+
+
+#### Cardiovascular Disease Risk
+
+
+
+## Discussion
+
+
+## Conclusion
+
+
