@@ -55,7 +55,7 @@ coffee_habit = factor(coffee_habit, levels = c("No", "Yes"))
     biomarker = factor(
       biomarker, 
       levels = c("glycohemoglobin", "insulin_uuml", "glucose_mgdl"), 
-      labels = c("Glycohemoglobin (%)", "Insulin (mu/ml)", "Glucose (mg/dL)")
+      labels = c("Glycohemoglobin (%)", "Insulin (μU/mL)", "Glucose (mg/dL)")
     ))
 
 summary_df <- diabetes_long |>
@@ -73,6 +73,7 @@ p <- ggplot(summary_df,
                 width = 0.15) +
   facet_wrap(~ biomarker, scales = "free_y") +
   labs(
+    title = "Diabetes biomarkers by coffee habit", 
     x = "Coffee habit",
     y = "Mean diabetes biomarker level",
     fill = "Coffee habit"
@@ -80,7 +81,8 @@ p <- ggplot(summary_df,
   theme_minimal(base_size = 12) +
   theme(
     legend.position = "none",
-    axis.text.x = element_text(angle = 20, hjust = 1)
+    axis.text.x = element_text(angle = 20, hjust = 1), 
+    plot.title = element_text(hjust = 0.5)
   )
 ggplotly(p)
 ```
