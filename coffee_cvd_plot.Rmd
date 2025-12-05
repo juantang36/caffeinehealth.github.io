@@ -72,7 +72,8 @@ p = ggplot(cvd_long, aes(x = coffee_habit, y = value, fill = coffee_habit)) +
   theme_minimal() +
   theme(
     legend.position = "none",
-    axis.text.x = element_text(angle = 20, hjust = 1)
+    axis.text.x = element_text(angle = 20, hjust = 1), 
+    plot.title = element_text(hjust = 0.5)
   )
 
 # turn into interactive plot
