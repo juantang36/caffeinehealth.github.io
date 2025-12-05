@@ -60,7 +60,8 @@ gg_bp_violin <- ggplot(bp_long,
   labs(x = NULL, y = "Blood pressure (mmHg)",
        title = "Blood pressure by coffee habit") +
   theme_minimal(base_size = 13) +
-  theme(legend.position = "none")
+  theme(legend.position = "none", 
+        plot.title = element_text(hjust = 0.5))
 gg_bp_violin
 ```
 The distributions of systolic and diastolic blood pressure among groups that consumed coffee are shown in this figure. Violin shapes show the whole density and range of values, and integrated boxplots make it easy to compare medians and interquartile ranges. There are just little changes between the groups; for example, those who regularly drink coffee had somewhat higher systolic readings. It seems that missingness is not systematic, as the NA group exhibits behavior that is consistent with the other categories. Potential, however modest, correlations between blood pressure and regular coffee use are efficiently brought to light by this depiction.
@@ -100,7 +101,8 @@ gg_bp_mean_line <-
   labs(x = NULL, y = "Mean BP (mmHg)",
        color = NULL,
        title = "Mean Systolic & Diastolic BP by coffee habit") +
-  theme_minimal(base_size = 13)
+  theme_minimal(base_size = 13) + 
+  theme(plot.title = element_text(hjust = 0.5))
 gg_bp_mean_line
 ```
 Displayed here with 95% confidence intervals are the mean diastolic and systolic blood pressure readings for the whole cohort. The group that regularly drinks coffee had somewhat higher systolic blood pressure than the group that does not, but there is no change in diastolic blood pressure. Since the confidence intervals for different groups overlap, it's possible that the observed changes in means may not reflect significant impacts. In addition to the distributions given for individuals, this graphic gives a clear picture of the population as a whole.
@@ -113,7 +115,8 @@ gg_pulse_ridge <-
   labs(x = "Pulse (beats/min)", y = NULL,
        title = "Pulse distribution by coffee habit") +
   theme_minimal(base_size = 13) +
-  theme(legend.position = "none")
+  theme(legend.position = "none", 
+        plot.title = element_text(hjust = 0.5))
 gg_pulse_ridge
 ```
 The ridgeline density plot visualizes pulse-rate distributions across coffee habits. While the overall shapes are similar, the coffee-habit group appears to trend slightly higher in pulse rate, though the overlap between groups is substantial. This plot effectively demonstrates distributional differences without relying on summary statistics and provides an intuitive sense of how pulse varies across the cohort.
@@ -127,7 +130,8 @@ gg_sleep_violin <-
   labs(x = NULL, y = "Average sleep duration (hours)",
        title = "Average sleep time by coffee habit") +
   theme_minimal(base_size = 13) +
-  theme(legend.position = "none")
+  theme(legend.position = "none", 
+        plot.title = element_text(hjust = 0.5))
 gg_sleep_violin
 ```
 This visualization shows the distribution of average daily sleep time across coffee-consumption categories. The central tendencies differ only slightly, with coffee-habit individuals sleeping marginally less on average. The overall shape and spread are similar across categories, suggesting that habitual coffee intake is not strongly related to average sleep duration. The combination of violin and boxplot elements provides both distributional context and robust summary measures.
@@ -157,7 +161,8 @@ gg_sleep_paired <-
   facet_wrap(~ coffee_group) +
   labs(x = NULL, y = "Sleep duration (hours)",
        title = "Weekday vs weekend sleep by coffee habit") +
-  theme_minimal(base_size = 13)
+  theme_minimal(base_size = 13) + 
+  theme(plot.title = element_text(hjust = 0.5))
 gg_sleep_paired
 ```
 Individual differences in sleep duration on weekdays and weekends are shown by this paired-line plot. People in every coffee group get more shut-eye on weekends, and the size of the difference between weekday and weekend sleep is about the same. Individual variability is shown by the dense cluster of light gray lines, while the group-average pattern is captured by the overlay black summary line. This graph shows that the difference in sleep between the weekdays and weekends is unaffected by coffee use.

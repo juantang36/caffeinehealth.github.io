@@ -251,6 +251,9 @@ $(document).ready(function () {
   <a href="proposal.html">Proposal</a>
 </li>
 <li>
+  <a href="Analysis.html">Analysis</a>
+</li>
+<li>
   <a href="https://github.com/juantang36/caffeinehealth.github.io.git">
     <span class="fa fa-github fa-lg"></span>
      
@@ -295,11 +298,12 @@ gg_bp_violin &lt;- ggplot(bp_long,
   labs(x = NULL, y = &quot;Blood pressure (mmHg)&quot;,
        title = &quot;Blood pressure by coffee habit&quot;) +
   theme_minimal(base_size = 13) +
-  theme(legend.position = &quot;none&quot;)
+  theme(legend.position = &quot;none&quot;, 
+        plot.title = element_text(hjust = 0.5))
 gg_bp_violin</code></pre>
-<pre><code>## Warning: Removed 2980 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 114 rows containing non-finite outside the scale range
 ## (`stat_ydensity()`).</code></pre>
-<pre><code>## Warning: Removed 2980 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 114 rows containing non-finite outside the scale range
 ## (`stat_boxplot()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 The distributions of systolic and diastolic blood pressure among groups
@@ -348,7 +352,8 @@ gg_bp_mean_line &lt;-
   labs(x = NULL, y = &quot;Mean BP (mmHg)&quot;,
        color = NULL,
        title = &quot;Mean Systolic &amp; Diastolic BP by coffee habit&quot;) +
-  theme_minimal(base_size = 13)
+  theme_minimal(base_size = 13) + 
+  theme(plot.title = element_text(hjust = 0.5))
 gg_bp_mean_line</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 Displayed here with 95% confidence intervals are the mean diastolic and
@@ -369,10 +374,11 @@ whole.</p>
   labs(x = &quot;Pulse (beats/min)&quot;, y = NULL,
        title = &quot;Pulse distribution by coffee habit&quot;) +
   theme_minimal(base_size = 13) +
-  theme(legend.position = &quot;none&quot;)
+  theme(legend.position = &quot;none&quot;, 
+        plot.title = element_text(hjust = 0.5))
 gg_pulse_ridge</code></pre>
 <pre><code>## Picking joint bandwidth of 2.48</code></pre>
-<pre><code>## Warning: Removed 1490 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 57 rows containing non-finite outside the scale range
 ## (`stat_density_ridges()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 The ridgeline density plot visualizes pulse-rate distributions across
@@ -391,11 +397,12 @@ provides an intuitive sense of how pulse varies across the cohort.</p>
   labs(x = NULL, y = &quot;Average sleep duration (hours)&quot;,
        title = &quot;Average sleep time by coffee habit&quot;) +
   theme_minimal(base_size = 13) +
-  theme(legend.position = &quot;none&quot;)
+  theme(legend.position = &quot;none&quot;, 
+        plot.title = element_text(hjust = 0.5))
 gg_sleep_violin</code></pre>
-<pre><code>## Warning: Removed 101 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 32 rows containing non-finite outside the scale range
 ## (`stat_ydensity()`).</code></pre>
-<pre><code>## Warning: Removed 101 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 32 rows containing non-finite outside the scale range
 ## (`stat_boxplot()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 This visualization shows the distribution of average daily sleep time
@@ -431,13 +438,14 @@ gg_sleep_paired &lt;-
   facet_wrap(~ coffee_group) +
   labs(x = NULL, y = &quot;Sleep duration (hours)&quot;,
        title = &quot;Weekday vs weekend sleep by coffee habit&quot;) +
-  theme_minimal(base_size = 13)
+  theme_minimal(base_size = 13) + 
+  theme(plot.title = element_text(hjust = 0.5))
 gg_sleep_paired</code></pre>
-<pre><code>## Warning: Removed 161 rows containing non-finite outside the scale range
+<pre><code>## Warning: Removed 45 rows containing non-finite outside the scale range
 ## (`stat_summary()`).
-## Removed 161 rows containing non-finite outside the scale range
+## Removed 45 rows containing non-finite outside the scale range
 ## (`stat_summary()`).</code></pre>
-<pre><code>## Warning: Removed 161 rows containing missing values or values outside the scale range
+<pre><code>## Warning: Removed 45 rows containing missing values or values outside the scale range
 ## (`geom_line()`).</code></pre>
 <p><img src="Pulse---Pressure_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 Individual differences in sleep duration on weekdays and weekends are
