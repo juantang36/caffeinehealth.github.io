@@ -30,12 +30,18 @@ Our interest in coffee and health grew from prior coursework and lived experienc
 
 
 ## Initial questions
+Our initial questions were structured to explore potential associations between coffee intake and health outcomes:
+
+- Does coffee consumption affect indicators such as blood pressure, pulse rate, and sleep?
+- Will coffee consumption influence relevant biomarkers and increase the risk of developing diabetes?
+- Whether long-term coffee consumption increases or decreases the risk of cardiovascular disease?
+- Is there a dose–response between caffeine intake and health outcomes?
 
 
 ## Data
 
 
-## Exploratory analysis
+## Exploratory Data Analysis
 ### Group Comparisons: Coffee Intake vs No Coffe Intake
 
 #### Blood Pressure & Pulse
