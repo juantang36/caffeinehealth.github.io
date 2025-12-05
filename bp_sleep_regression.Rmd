@@ -1,0 +1,112 @@
+---
+title: "sleep_n_bp_regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(plotly)
+analytic = read_csv("./analytic.csv")
+```
+
+
+```{r}
+bp_sleep_rg <- analytic |>
+  mutate(
+    coffee_group = factor(
+      coffee_habit_binary,
+      levels = c(0, 1),
+      labels = c("No coffee", "Coffee habit")
+    ), 
+
+    # Pressure
+    sbp = rowMeans(across(c(bpxosy1, bpxosy2, bpxosy3)), na.rm = TRUE),
+    dbp = rowMeans(across(c(bpxodi1, bpxodi2, bpxodi3)), na.rm = TRUE),
+
+    # Pulse
+    pulse = rowMeans(across(c(bpxopls1, bpxopls2, bpxopls3)), na.rm = TRUE),
+
+    # Sleep
+    sleep_weekday = sld012,
+    sleep_weekend = sld013,
+    sleep_avg = (sleep_weekday * 5 + sleep_weekend * 2) / 7,
+    caffeine_mg = (dr1tcaff + dr2tcaff) / 2
+  ) |> 
+   filter(!is.na(coffee_group))
+```
+
+## Blood pressure regression model
+
+```{r}
+bp_rg = bp_sleep_rg %>% 
+  select(seqn, coffee_group, sbp, dbp, caffeine_mg)
+
+model_sbp = lm(sbp ~ caffeine_mg, data = bp_rg)
+model_dbp = lm(dbp ~ caffeine_mg, data = bp_rg)
+
+summary(model_sbp)
+summary(model_dbp)
+```
+
+## Blood pressure regression plot
+
+```{r}
+bp_rg_long = bp_rg %>% 
+  pivot_longer(cols = c(sbp, dbp),
+               names_to = "bp_type",
+               values_to = "bp_value") %>% 
+  filter(coffee_group == "Coffee habit")
+
+bp_rg_plot = bp_rg_long %>% 
+  ggplot(aes(x = caffeine_mg, 
+             y = bp_value, 
+             color = bp_type)) + 
+  geom_point(size = 0.8, 
+             alpha = 0.4) + 
+  geom_smooth(method = "lm", 
+              se = TRUE, 
+              size = 0.8) + 
+  labs(x = "Caffeine intake (mg)", 
+       y = "Blood pressure (mmHg)", 
+       title = "Blood pressure vs caffeine intake") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  scale_color_discrete(name = "BP type")
+
+bp_rg_interactive = ggplotly(bp_rg_plot)
+bp_rg_interactive$x$data[[1]]$name <- "Diastolic BP"
+bp_rg_interactive$x$data[[2]]$name <- "Systolic BP"
+bp_rg_interactive
+```
+
+## Sleep regression model 
+
+```{r}
+sleep_rg = bp_sleep_rg %>% 
+  select(seqn, coffee_group, sleep_avg, caffeine_mg)
+
+model_sleep = lm(sleep_avg ~ caffeine_mg, data = sleep_rg)
+
+summary(model_sleep)
+```
+
+## Sleep regression plot
+
+```{r}
+sleep_rg_time = sleep_rg %>% 
+  filter(coffee_group == "Coffee habit") %>%
+  ggplot(aes(x = caffeine_mg, 
+             y = sleep_avg)) + 
+  geom_point(size = 0.8, 
+             alpha = 0.4, 
+             color = "gray30") + 
+  geom_smooth(method = "lm", 
+              size = 0.8) + 
+  labs(x = "Caffeine intake (mg)", 
+       y = "Average sleep duration (hours)", 
+       title = "Average sleep time vs caffeine intake") + 
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+sleep_rg_interactive = ggplotly(sleep_rg_time)
+sleep_rg_interactive
+```
