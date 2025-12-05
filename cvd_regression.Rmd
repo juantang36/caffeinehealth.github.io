@@ -53,7 +53,7 @@ summary(model_ldl)
 chlesterol_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = total_cholesterol)) +
   geom_point(size = .8, alpha = .5, color = "gray30") +
   geom_smooth(method = "lm", se = TRUE, size = .8) +
-  labs(title = "CVD biomarkers vs caffeine intake", x = "Caffeine (mg)", y = "Biomarkers (mg/dL)") + 
+  labs(title = "CVD biomarkers vs caffeine intake", x = " ", y = "Biomarker level (mg/dL)") + 
   theme(plot.title = element_text(hjust = .5))
 
 hdl_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = hdl)) +
@@ -64,7 +64,7 @@ hdl_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = hdl)) +
 ldl_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = ldl)) +
   geom_point(size = .8, alpha = .5, color = "gray30") +
   geom_smooth(method = "lm", se = TRUE, size = .8) +
-  labs(x = "Caffeine (mg)", y = " ") 
+  labs(x = " ", y = " ") 
 
 cvd_rg_interactive = subplot(
   ggplotly(chlesterol_rg, tooltip = "all"),
@@ -78,21 +78,21 @@ cvd_rg_interactive = subplot(
     annotations = list(
       list(
         x = 0.16, y = 1.07,
-        text = "<b>chlesterol</b>",
+        text = "<b>Total Chlesterol</b>",
         xref = "paper", yref = "paper",
         xanchor = "center", showarrow = FALSE,
         font = list(size = 12)
       ),
       list(
         x = 0.5, y = 1.07,
-        text = "<b>hdl</b>",
+        text = "<b>HDL</b>",
         xref = "paper", yref = "paper",
         xanchor = "center", showarrow = FALSE,
         font = list(size = 12)
       ),
       list(
         x = 0.84, y = 1.07,
-        text = "<b>ldl</b>",
+        text = "<b>LDL</b>",
         xref = "paper", yref = "paper",
         xanchor = "center", showarrow = FALSE,
         font = list(size = 12)
