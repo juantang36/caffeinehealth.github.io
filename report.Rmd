@@ -22,8 +22,6 @@ library(ggridges)
 analytic = read_csv("./analytic.csv")
 ```
 
-<br>
-
 ## Scientific Title
 Exploring whether coffee is beneficial or harmful to human health by using the National Health and Nutrition Examination Survey (NHANES) datasets from the Centers for Disease Control and Prevention (CDC).
 
