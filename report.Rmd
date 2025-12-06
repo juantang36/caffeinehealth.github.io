@@ -6,8 +6,8 @@ output:
     theme: flatly
     toc: true
     toc_float: true
+    toc_depth: 3
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
@@ -22,24 +22,29 @@ library(ggridges)
 analytic = read_csv("./analytic.csv")
 ```
 
+<br>
 
 ## Scientific Title
 Exploring whether coffee is beneficial or harmful to human health by using the National Health and Nutrition Examination Survey (NHANES) datasets from the Centers for Disease Control and Prevention (CDC).
 
+<br> 
 
 ## Group Members
 Disheng Jiang (dj2763), Juan Tang (jt3649), Ruhui Shen (rs4788), Yurou Liu (yl6109)
 
+<br> 
 
 ## Motivation
 Coffee, as one of the most popular beverages in the world, is highly favored by people. Since the caffeine in coffee has a regulatory effect on the central nervous system (Herqutanto et al., 2024), coffee is widely consumed for alertness. The debate over whether coffee is beneficial or harmful to human health is long standing. Some researchers suggest that moderate coffee consumption may help reduce the risk of type 2 diabetes and cardiovascular disease, and may be associated with anti-inflammatory and antioxidant effects (Barrea et al., 2023). However, other studies indicate that coffee intake could potentially increase the risk of certain cancers and fractures (Asoudeh et al., 2023; Carter et al., 2022). We wanted to explore the relationship between coffee intake and health through the analysis of large amounts of data and identify a reasonable intake level.
 
 NHANES is uniquely well-suited for this study. NHANES contains nationally representative sampling with detailed, standardized measurements that are directly relevant to caffeine. It also contains clinically measured outcomes like blood pressure, pulse and BMI, meanwhile providing rich covariates such as age, sex, physical activity, and socioeconomic markers. By utilizing the abundant raw data, we can learn about the effect of coffee on human health and dose-response patterns through data analysis and draw transparent and reproducible public health inferences.
 
+<br> 
 
 ## Related work
 Our interest in coffee and health grew from prior coursework and lived experience. One member of our group studied food science as an undergraduate and had previously participated in a simple discussion about whether coffee is beneficial to health. Coffee is one of the most popular beverages among young people, and we are all very interested in this topic. As students in the School of Public Health, we have a strong desire to explore health-related issues. Therefore, when we received this project assignment, we believed it to be an excellent opportunity to apply our knowledge of statistics and data science to further investigate the questions on our minds.
 
+<br> 
 
 ## Initial questions
 Our initial questions were structured to explore potential associations between coffee intake and health outcomes:
@@ -49,6 +54,7 @@ Our initial questions were structured to explore potential associations between 
 - Whether long-term coffee consumption increases or decreases the risk of cardiovascular disease?
 - Is there a dose–response between caffeine intake and health outcomes?
 
+<br> 
 
 ## Data
 
@@ -222,14 +228,14 @@ These tidy datasets were used to generate violin/boxplots and to run group-wise 
 - The master dataset contains **all participants, all examination/nutrient/lab variables**, and is filtered only at the step of constructing domain-specific datasets.  
 - This design ensures reproducibility and avoids repeated merging of NHANES modules.
 
-
+<br> 
 
 ## Exploratory Data Analysis
 We selected data from August 21 to August 23 in the NHANES database, identifying individuals who consumed coffee in both random tests as having a coffee-drinking habit and assigning them to the experimental group. Those who did not consume coffee beverages in either test were classified as having no coffee-drinking habit and assigned to the control group. We visualized questionnaire results and biomarkers for both groups and conducted hypothesis testing.
 
 ### Group Comparisons: Coffee Intake vs No Coffe Intake
 
-#### Blood Pressure & Pulse
+### Blood Pressure & Pulse
 
 ```{r include = FALSE}
 bp_sleep_df <- analytic |>
@@ -347,7 +353,7 @@ gg_pulse_ridge
 
 The ridgeline density plot visualizes pulse-rate distributions across coffee habits. While the overall shapes are similar, the coffee-habit group appears to trend slightly higher in pulse rate, though the overlap between groups is substantial. This plot effectively demonstrates distributional differences without relying on summary statistics and provides an intuitive sense of how pulse varies across the cohort.
 
-#### Sleep Status
+### Sleep Status
 
 - Plot: Average sleep time by coffee habit
 
@@ -399,7 +405,7 @@ gg_sleep_paired
 
 Individual differences in sleep duration on weekdays and weekends are shown by this paired-line plot. People in every coffee group get more shut-eye on weekends, and the size of the difference between weekday and weekend sleep is about the same. Individual variability is shown by the dense cluster of light gray lines, while the group-average pattern is captured by the overlay black summary line. This graph shows that the difference in sleep between the weekdays and weekends is unaffected by coffee use.
 
-#### Diabetes Risk
+### Diabetes Risk
 
 ```{r}
 # clean and tidy data
@@ -541,7 +547,7 @@ The mean insulin level was  `r round(ttest_results_clean$mean_no[ttest_results_c
 The mean difference (Yes − No) was  **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)` μU/mL**  with a 95% CI of (`r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)`, `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)`)  and a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 3)`.  
 This reflects a statistically significant decrease in fasting insulin among coffee drinkers.
 
-#### Cardiovascular Disease Risk
+### Cardiovascular Disease Risk
 
 ```{r tidy_cvd_data}
 cvd_df = analytic |>
@@ -638,8 +644,7 @@ indicating that the difference was not statistically significant.
 
 Total cholesterol was also significantly higher among coffee drinkers (mean difference = `r round(cvd_ttest_clean$diff_mean[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2)` mg/dL, 95% CI: `r paste0("(", round(cvd_ttest_clean$ci_low[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2), ", ", round(cvd_ttest_clean$ci_high[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2), ")")`, *p* = `r signif(cvd_ttest_clean$p_value[cvd_ttest_clean$biomarker == "Total Cholesterol"], 3)`).
 
-
-
+<br> 
 
 ## Regression Analysis
 
@@ -956,8 +961,11 @@ cvd_rg_interactive
 
 Linear models relating caffeine intake to total cholesterol, LDL, and HDL showed weak, imprecise associations: small positive slopes for total cholesterol and LDL and a small negative slope for HDL, all with non-significant p-values and R² ≈ 0. Scatterplots revealed broad variability in lipid levels at all intake levels and nearly flat fitted lines, though the directions of the slopes were generally consistent with the group comparisons between coffee drinkers and non-drinkers. Overall, within typical intake ranges, any dose–response relationship between caffeine and lipid biomarkers appears subtle and easily masked by diet, adiposity, medications, and other CVD risk factors, so these results are best viewed as descriptive and hypothesis-generating.
 
+<br> 
 
 ## Conclusion
+
+<br> 
 
 ### Discussion
 Using recent NHANES cycles, we compared adults with and without a consistent coffee-drinking habit and then examined continuous caffeine intake in relation to cardiometabolic and sleep-related biomarkers. Overall, our findings suggest that habitual coffee consumption is not strongly associated with major adverse profiles in blood pressure, lipids, glycemic markers, or sleep duration, although several small and potentially meaningful patterns emerged.
@@ -969,6 +977,8 @@ For cardiovascular markers, coffee drinkers had higher HDL alongside modestly hi
 These findings are partly in line with what we expected based on prior studies: we saw no evidence that higher caffeine intake is dramatically harmful, and some patterns (lower insulin with comparable glucose, higher HDL) are consistent with potential metabolic benefits of coffee. At the same time, the weak dose–response relationships and tiny R² values highlight that, in this cross-sectional setting, caffeine explains very little of the large person-to-person variability in these biomarkers. Our analysis is limited by self-reported diet, a two-day definition of “coffee habit,” lack of adjustment for key confounders (age, BMI, smoking, diet quality, medications, socioeconomic factors), and the cross-sectional design, which prevents causal inference.
 
 An important insight from this project is that categorizing people as “coffee habit” vs “no coffee” captures broader lifestyle patterns, while continuous caffeine intake alone is a poor predictor of biomarker levels. Future work should incorporate multivariable models, explore non-linear dose–response relationships, separate coffee from other caffeinated beverages and added sugar/cream, and, ideally, use longitudinal data to study incident disease. Within the limits of our analysis, the data suggest that typical coffee consumption in U.S. adults is unlikely to have large detrimental effects on blood pressure, lipids, sleep, or glycemic control, and may be compatible with slightly improved insulin sensitivity.
+
+<hr>
 
 ### Limitation
 This study has several important limitations. First, our definition of “coffee habit” is based on two 24-hour dietary recalls: participants who reported coffee on both days were treated as habitual drinkers, and those who reported none were treated as non-drinkers. This approach may misclassify long-term coffee habits, because two days may capture short-term intake and day-to-day variation rather than stable behavior. As a result, estimated associations may reflect acute responses or random fluctuation more than true long-term effects.
