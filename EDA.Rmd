@@ -1,0 +1,435 @@
+---
+title: "Exploratory Data Analysis"
+output: 
+  html_document:
+    code_folding: hide
+    theme: flatly
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(plotly)
+library(patchwork)
+library(readr)
+library(haven)
+library(janitor)
+library(ggplot2)
+library(ggridges)
+analytic = read_csv("./analytic.csv")
+```
+
+We selected data from August 21 to August 23 in the NHANES database, identifying individuals who consumed coffee in both random tests as having a coffee-drinking habit and assigning them to the experimental group. Those who did not consume coffee beverages in either test were classified as having no coffee-drinking habit and assigned to the control group. We visualized questionnaire results and biomarkers for both groups and conducted hypothesis testing.
+
+## Group Comparisons: Coffee Intake vs No Coffe Intake
+
+### Blood Pressure & Pulse
+
+```{r include = FALSE}
+bp_sleep_df <- analytic |>
+  mutate(
+    coffee_group = factor(
+      coffee_habit_binary,
+      levels = c(0, 1),
+      labels = c("No coffee", "Coffee habit")
+    ), 
+
+    # Pressure
+    sbp = rowMeans(across(c(bpxosy1, bpxosy2, bpxosy3)), na.rm = TRUE),
+    dbp = rowMeans(across(c(bpxodi1, bpxodi2, bpxodi3)), na.rm = TRUE),
+
+    # Pulse
+    pulse = rowMeans(across(c(bpxopls1, bpxopls2, bpxopls3)), na.rm = TRUE),
+
+    # Sleep
+    sleep_weekday = sld012,
+    sleep_weekend = sld013,
+    sleep_avg = (sleep_weekday * 5 + sleep_weekend * 2) / 7
+  ) |> 
+   filter(!is.na(coffee_group))
+
+```
+
+- Plot: Blood pressure by coffee habit
+```{r echo = TRUE}
+bp_long <- bp_sleep_df |>
+  select(seqn, coffee_group, sbp, dbp) |>
+  pivot_longer(cols = c(sbp, dbp),
+               names_to = "bp_type",
+               values_to = "bp_value") |>
+  mutate(
+    bp_type = factor(
+      bp_type,
+      levels = c("sbp", "dbp"),
+      labels = c("Systolic BP", "Diastolic BP")
+    )
+  )
+
+gg_bp_violin <- ggplot(bp_long,
+                       aes(x = coffee_group,
+                           y = bp_value,
+                           fill = coffee_group)) +
+  geom_violin(alpha = 0.4, trim = FALSE) +
+  geom_boxplot(width = 0.18, outlier.size = 0.5) +
+  facet_wrap(~ bp_type, scales = "free_y") +
+  labs(x = NULL, y = "Blood pressure (mmHg)",
+       title = "Blood pressure by coffee habit") +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none", 
+        plot.title = element_text(hjust = 0.5))
+gg_bp_violin
+```
+
+The distributions of systolic and diastolic blood pressure among groups that consumed coffee are shown in this figure. Violin shapes show the whole density and range of values, and integrated boxplots make it easy to compare medians and interquartile ranges. There are just little changes between the groups; for example, those who regularly drink coffee had somewhat higher systolic readings. It seems that missingness is not systematic, as the NA group exhibits behavior that is consistent with the other categories. Potential, however modest, correlations between blood pressure and regular coffee use are efficiently brought to light by this depiction.
+
+- Plot: Mean Systolic & Diastolic BP (with 95% CI) by coffee habit
+
+```{r echo = TRUE}
+bp_summary <- bp_sleep_df |>
+  group_by(coffee_group) |>
+  summarise(
+    mean_sbp = mean(sbp, na.rm = TRUE),
+    se_sbp   = sd(sbp, na.rm = TRUE) / sqrt(sum(!is.na(sbp))),
+    mean_dbp = mean(dbp, na.rm = TRUE),
+    se_dbp   = sd(dbp, na.rm = TRUE) / sqrt(sum(!is.na(dbp)))
+  ) |>
+  pivot_longer(
+    cols = -coffee_group,
+    names_to = c("metric", "bp_type"),
+    names_sep = "_"
+  ) |>
+  pivot_wider(
+    names_from = metric,
+    values_from = value
+  ) |>
+  mutate(
+    bp_type = factor(
+      bp_type,
+      levels = c("sbp", "dbp"),
+      labels = c("Systolic BP", "Diastolic BP")
+    )
+  )
+
+gg_bp_mean_line <- 
+  ggplot(bp_summary, aes(x = coffee_group, y = mean, color = bp_type, group = bp_type)) +
+  geom_point(size = 3) +
+  geom_line(linewidth = 1) +
+  geom_errorbar(aes(ymin = mean - 1.96 * se, ymax = mean + 1.96 * se), width = 0.1) +
+  labs(x = NULL, y = "Mean BP (mmHg)",
+       color = NULL,
+       title = "Mean Systolic & Diastolic BP by coffee habit") +
+  theme_minimal(base_size = 13) + 
+  theme(plot.title = element_text(hjust = 0.5))
+gg_bp_mean_line
+```
+
+Displayed here with 95% confidence intervals are the mean diastolic and systolic blood pressure readings for the whole cohort. The group that regularly drinks coffee had somewhat higher systolic blood pressure than the group that does not, but there is no change in diastolic blood pressure. Since the confidence intervals for different groups overlap, it's possible that the observed changes in means may not reflect significant impacts. In addition to the distributions given for individuals, this graphic gives a clear picture of the population as a whole.
+
+- Plot: Pulse distribution by coffee habit
+
+```{r echo = TRUE}
+gg_pulse_ridge <- 
+  ggplot(bp_sleep_df, aes(x = pulse, y = coffee_group, fill = coffee_group)) +
+  geom_density_ridges(alpha = 0.5, scale = 1.1) +
+  labs(x = "Pulse (beats/min)", y = NULL,
+       title = "Pulse distribution by coffee habit") +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none", 
+        plot.title = element_text(hjust = 0.5))
+gg_pulse_ridge
+```
+
+The ridgeline density plot visualizes pulse-rate distributions across coffee habits. While the overall shapes are similar, the coffee-habit group appears to trend slightly higher in pulse rate, though the overlap between groups is substantial. This plot effectively demonstrates distributional differences without relying on summary statistics and provides an intuitive sense of how pulse varies across the cohort.
+
+### Sleep Status
+
+- Plot: Average sleep time by coffee habit
+
+```{r echo = TRUE}
+gg_sleep_violin <- 
+  ggplot(bp_sleep_df, aes(x = coffee_group, y = sleep_avg, fill = coffee_group)) +
+  geom_violin(alpha = 0.4, trim = FALSE) +
+  geom_boxplot(width = 0.18, outlier.size = 0.5) +
+  labs(x = NULL, y = "Average sleep duration (hours)",
+       title = "Average sleep time by coffee habit") +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none", 
+        plot.title = element_text(hjust = 0.5))
+gg_sleep_violin
+```
+
+This visualization shows the distribution of average daily sleep time across coffee-consumption categories. The central tendencies differ only slightly, with coffee-habit individuals sleeping marginally less on average. The overall shape and spread are similar across categories, suggesting that habitual coffee intake is not strongly related to average sleep duration. The combination of violin and boxplot elements provides both distributional context and robust summary measures.
+
+- Plot: Weekday vs weekend sleep by coffee habit
+
+```{r echo = TRUE}
+sleep_long <- bp_sleep_df |>
+  select(seqn, coffee_group, sleep_weekday, sleep_weekend) |>
+  pivot_longer(
+    cols = c(sleep_weekday, sleep_weekend),
+    names_to = "day_type",
+    values_to = "sleep_hours"
+  ) |>
+  mutate(
+    day_type = factor(
+      day_type,
+      levels = c("sleep_weekday", "sleep_weekend"),
+      labels = c("Weekday", "Weekend")
+    )
+  )
+
+gg_sleep_paired <- 
+  ggplot(sleep_long, aes(x = day_type, y = sleep_hours, group = seqn)) +
+  geom_line(alpha = 0.12) + 
+  stat_summary(fun = mean, geom = "line", aes(group = 1), linewidth = 1.2, color = "black") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "black") +
+  facet_wrap(~ coffee_group) +
+  labs(x = NULL, y = "Sleep duration (hours)",
+       title = "Weekday vs weekend sleep by coffee habit") +
+  theme_minimal(base_size = 13) + 
+  theme(plot.title = element_text(hjust = 0.5))
+gg_sleep_paired
+```
+
+Individual differences in sleep duration on weekdays and weekends are shown by this paired-line plot. People in every coffee group get more shut-eye on weekends, and the size of the difference between weekday and weekend sleep is about the same. Individual variability is shown by the dense cluster of light gray lines, while the group-average pattern is captured by the overlay black summary line. This graph shows that the difference in sleep between the weekdays and weekends is unaffected by coffee use.
+
+### Diabetes Risk
+
+```{r}
+# clean and tidy data
+diabetes_df = analytic |>
+  rename(
+    glycohemoglobin = lbxgh, 
+    insulin_uuml = lbxin, 
+    glucose_mgdl = lbxglu
+  ) |>
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    glycohemoglobin, 
+    insulin_uuml, 
+    glucose_mgdl
+  ) |>
+  filter(
+    !is.na(glycohemoglobin), 
+    !is.na(insulin_uuml), 
+    !is.na(glucose_mgdl)
+  )
+```
+
+- Plot: Diabetes biomarker level by coffee habit
+
+```{r bar_chart}
+diabetes_long <- diabetes_df |>
+  filter(!is.na(coffee_habit_binary)) |>
+  mutate(
+    coffee_habit = if_else(coffee_habit_binary, "Yes", "No"),
+coffee_habit = factor(coffee_habit, levels = c("No", "Yes"))
+  ) |>
+  select(coffee_habit, glycohemoglobin, insulin_uuml, glucose_mgdl) |>
+  pivot_longer(
+    cols = c(glycohemoglobin, insulin_uuml, glucose_mgdl),
+    names_to = "biomarker",
+    values_to = "value"
+  ) |>
+  mutate(
+    biomarker = factor(
+      biomarker, 
+      levels = c("glycohemoglobin", "insulin_uuml", "glucose_mgdl"), 
+      labels = c("Glycohemoglobin (%)", "Insulin (μU/mL)", "Glucose (mg/dL)")
+    ))
+
+summary_df <- diabetes_long |>
+  group_by(coffee_habit, biomarker) |>
+  summarize(
+    mean_value = mean(value, na.rm = TRUE),
+    se = sd(value, na.rm = TRUE) / sqrt(sum(!is.na(value))),
+    n = sum(!is.na(value)),
+    .groups = "drop")
+p <- ggplot(summary_df,
+            aes(x = coffee_habit, y = mean_value, fill = coffee_habit)) +
+  geom_col(width = 0.6) +
+  geom_errorbar(aes(ymin = mean_value - 1.96 * se,
+                    ymax = mean_value + 1.96 * se),
+                width = 0.15) +
+  facet_wrap(~ biomarker, scales = "free_y") +
+  labs(
+    title = "Diabetes biomarker level by coffee habit", 
+    x = "Coffee habit",
+    y = "Mean diabetes biomarker level",
+    fill = "Coffee habit"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 20, hjust = 1), 
+    plot.title = element_text(hjust = 0.5)
+  )
+ggplotly(p)
+```
+
+#### Two-sample t-test
+Outcome/biomarkers: 
+
+- Glycohemoglobin (%)
+
+- Insulin (μU/mL)
+
+- Glucose (mg/dL)
+
+H_0: mean biomarker is the same in coffee vs. no-coffee
+H_1: mean biomarkers is different between the two groups
+```{r t_test}
+# run two-sample t-tests by biomarker
+ttest_results = diabetes_long |>
+  group_by(biomarker) |>
+  group_modify(~ broom::tidy(t.test(value ~ coffee_habit, data = .x))) |>
+  ungroup()
+
+# clean up column names
+ttest_results_clean = ttest_results |>
+  transmute(
+    biomarker,
+    mean_no = estimate1,
+    mean_yes = estimate2,
+    diff_mean = estimate2 - estimate1,
+    ci_low = -conf.high,
+    ci_high = -conf.low,
+    p_value = p.value
+  )
+
+# tidy the test result
+ttest_results_clean |>
+  mutate(
+    across(
+      c(mean_no, mean_yes, diff_mean, ci_low, ci_high),
+      ~ round(.x, 2)
+    ),
+    p_value = signif(p_value, 3)
+  ) |>
+  knitr::kable(
+    caption = "Difference in mean diabetes biomarkers between coffee habit groups"
+  )
+```
+
+Among participants with complete diabetes biomarker data (N = `r nrow(diabetes_df)`), we compared
+glycohemoglobin, fasting glucose, and insulin levels between those who drank coffee on both recall days (with coffee habit)
+and those who did not drink coffee (without coffee habit).
+
+#### Results: Diabetes Biomarkers and Coffee Consumption
+
+We compared fasting glucose, glycohemoglobin (HbA1c), and fasting insulin between adults who did not drink coffee (“No”) and those who drank coffee on both days (“Yes”).
+
+**Fasting glucose:**  
+The mean fasting glucose level was `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="Glucose (mg/dL)"], 2)` mg/dL in the no_coffee group and `r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="Glucose (mg/dL)"], 2)` mg/dL in the coffee group.  
+The mean difference (Yes − No) was  **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="Glucose (mg/dL)"], 2)` mg/dL** with a 95% CI of  (`r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="Glucose (mg/dL)"], 2)`, `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="Glucose (mg/dL)"], 2)`)  and a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="Glucose (mg/dL)"], 3)`.  
+This indicates no statistically significant in fasting glucose among coffee drinkers. Fails to reject the null hypothesis.
+
+**Glycohemoglobin (HbA1c):**  
+HbA1c averaged `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="Glycohemoglobin (%)"], 2)`% in the No group and  `r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="Glycohemoglobin (%)"], 2)`% in the Yes group.  
+The mean difference was **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="Glycohemoglobin (%)"], 2)`%**  (95% CI:  `r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="Glycohemoglobin (%)"], 2)`,  `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="Glycohemoglobin (%)"], 2)`)  with a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="Glycohemoglobin (%)"], 3)`.  
+Large p-value suggests no statistically significant difference in HbA1c between coffee and non-coffee drinkers. Fails to reject the null hypothesis.
+
+**Fasting insulin:**  
+The mean insulin level was  `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)` μU/mL in the No group and `r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)` μU/mL in the Yes group.  
+The mean difference (Yes − No) was  **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)` μU/mL**  with a 95% CI of (`r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)`, `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)`)  and a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 3)`.  
+This reflects a statistically significant decrease in fasting insulin among coffee drinkers.
+
+### Cardiovascular Disease Risk
+
+```{r tidy_cvd_data}
+cvd_df = analytic |>
+  rename(
+    total_cholesterol = lbxtc, # unit = mg/dl
+    hdl = lbdhdd, # good cholesterol, unit = mg/dl
+    ldl = lbdldlm # bad cholesterol, unit = mg/dl (Martin-Hopkins)
+  ) |>
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    hdl, 
+    ldl, 
+    total_cholesterol
+  ) |>
+  filter(
+    !is.na(hdl), 
+    !is.na(ldl), 
+    !is.na(total_cholesterol)
+  )
+```
+
+- Plot: CVD biomarker level by coffee habit
+
+```{r cvd_plot}
+# make a tidy long dataset for plotting
+cvd_long = cvd_df |>
+  filter(!is.na(coffee_habit_binary)) |>
+  mutate(
+    coffee_habit = if_else(coffee_habit_binary, "Yes", "No"),
+coffee_habit = factor(coffee_habit, levels = c("No", "Yes"))
+  ) |>
+  pivot_longer(
+    cols = c(hdl, ldl, total_cholesterol),
+    names_to = "biomarker",
+    values_to = "value"
+  ) |>
+  mutate(
+    biomarker = factor(
+      biomarker, 
+      levels = c("hdl", "ldl", "total_cholesterol"), 
+      labels = c("HDL", "LDL", "Total Cholesterol")
+    )
+  )
+
+# ggplot: violin + boxplot, faceted by biomarker
+p = ggplot(cvd_long, aes(x = coffee_habit, y = value, fill = coffee_habit)) +
+  geom_violin(trim = FALSE, alpha = 0.6) +
+  geom_boxplot(width = 0.15, outlier.alpha = 0.3) +
+  facet_wrap(~ biomarker, scales = "free_y") +
+  labs(
+    x = "Coffee habit",
+    y = "Biomarker level (mg/dL)",
+    title = "CVD biomarker level by coffee habit"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 20, hjust = 1), 
+    plot.title = element_text(hjust = 0.5)
+  )
+
+# turn into interactive plot
+p_interactive = ggplotly(p)
+p_interactive
+```
+
+#### Two-sample t-test
+```{r t-test}
+cvd_ttest_raw = cvd_long |>
+  group_by(biomarker) |>
+  group_modify(~ broom::tidy(t.test(value ~ coffee_habit_binary, data = .x))) |>
+  ungroup()
+
+# clean results: convert direction to (yes-no), flip CI accordingly
+cvd_ttest_clean = cvd_ttest_raw |>
+  transmute(
+    biomarker, 
+    mean_no = estimate1, 
+    mean_yes = estimate2, 
+    diff_mean = estimate2 - estimate1, 
+    ci_low = -conf.high, 
+    ci_high = -conf.low, 
+    p_value = p.value
+  )
+
+knitr::kable(cvd_ttest_clean)
+```
+
+Based on the two-sample t-tests, HDL (good cholesterol) levels were higher among coffee drinkers with a statistically significant difference (mean difference = `r round(cvd_ttest_clean$diff_mean[cvd_ttest_clean$biomarker == "HDL"], 2)` mg/dL, 95% CI: `r paste0("(", round(cvd_ttest_clean$ci_low[cvd_ttest_clean$biomarker == "HDL"], 2),", ", round(cvd_ttest_clean$ci_high[cvd_ttest_clean$biomarker == "HDL"], 2), ")")`, *p* = `r signif(cvd_ttest_clean$p_value[cvd_ttest_clean$biomarker == "HDL"], 3)`).
+
+For LDL (bad cholesterol), the mean difference was `r round(cvd_ttest_clean$diff_mean[cvd_ttest_clean$biomarker == "LDL"], 2)` mg/dL (95% CI: `r paste0("(", round(cvd_ttest_clean$ci_low[cvd_ttest_clean$biomarker == "LDL"], 2), ", ", round(cvd_ttest_clean$ci_high[cvd_ttest_clean$biomarker == "LDL"], 2), ")")`), with *p* = `r signif(cvd_ttest_clean$p_value[cvd_ttest_clean$biomarker == "LDL"], 3)`, 
+indicating that the difference was not statistically significant.
+
+Total cholesterol was also significantly higher among coffee drinkers (mean difference = `r round(cvd_ttest_clean$diff_mean[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2)` mg/dL, 95% CI: `r paste0("(", round(cvd_ttest_clean$ci_low[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2), ", ", round(cvd_ttest_clean$ci_high[cvd_ttest_clean$biomarker == "Total Cholesterol"], 2), ")")`, *p* = `r signif(cvd_ttest_clean$p_value[cvd_ttest_clean$biomarker == "Total Cholesterol"], 3)`).
