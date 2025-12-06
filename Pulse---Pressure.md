@@ -32,11 +32,11 @@ gg_bp_violin <- ggplot(bp_long,
 gg_bp_violin
 ```
 
-    ## Warning: Removed 114 rows containing non-finite outside the scale range
-    ## (`stat_ydensity()`).
+    ## Warning: Removed 114 rows containing non-finite outside the scale
+    ## range (`stat_ydensity()`).
 
-    ## Warning: Removed 114 rows containing non-finite outside the scale range
-    ## (`stat_boxplot()`).
+    ## Warning: Removed 114 rows containing non-finite outside the scale
+    ## range (`stat_boxplot()`).
 
 ![](Pulse---Pressure_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> The
 distributions of systolic and diastolic blood pressure among groups that
@@ -118,8 +118,8 @@ gg_pulse_ridge
 
     ## Picking joint bandwidth of 2.48
 
-    ## Warning: Removed 57 rows containing non-finite outside the scale range
-    ## (`stat_density_ridges()`).
+    ## Warning: Removed 57 rows containing non-finite outside the scale
+    ## range (`stat_density_ridges()`).
 
 ![](Pulse---Pressure_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> The
 ridgeline density plot visualizes pulse-rate distributions across coffee
@@ -144,11 +144,11 @@ gg_sleep_violin <-
 gg_sleep_violin
 ```
 
-    ## Warning: Removed 32 rows containing non-finite outside the scale range
-    ## (`stat_ydensity()`).
+    ## Warning: Removed 32 rows containing non-finite outside the scale
+    ## range (`stat_ydensity()`).
 
-    ## Warning: Removed 32 rows containing non-finite outside the scale range
-    ## (`stat_boxplot()`).
+    ## Warning: Removed 32 rows containing non-finite outside the scale
+    ## range (`stat_boxplot()`).
 
 ![](Pulse---Pressure_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 This visualization shows the distribution of average daily sleep time
@@ -190,13 +190,13 @@ gg_sleep_paired <-
 gg_sleep_paired
 ```
 
-    ## Warning: Removed 45 rows containing non-finite outside the scale range
-    ## (`stat_summary()`).
-    ## Removed 45 rows containing non-finite outside the scale range
-    ## (`stat_summary()`).
+    ## Warning: Removed 45 rows containing non-finite outside the scale
+    ## range (`stat_summary()`).
+    ## Removed 45 rows containing non-finite outside the scale
+    ## range (`stat_summary()`).
 
-    ## Warning: Removed 45 rows containing missing values or values outside the scale range
-    ## (`geom_line()`).
+    ## Warning: Removed 45 rows containing missing values or values outside
+    ## the scale range (`geom_line()`).
 
 ![](Pulse---Pressure_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 Individual differences in sleep duration on weekdays and weekends are

@@ -6,13 +6,13 @@ Read_dataset
 analytic = read_csv("./analytic.csv")
 ```
 
-    ## Warning: One or more parsing issues, call `problems()` on your data frame for details,
-    ## e.g.:
+    ## Warning: One or more parsing issues, call `problems()` on your data
+    ## frame for details, e.g.:
     ##   dat <- vroom(...)
     ##   problems(dat)
 
     ## Rows: 6216 Columns: 328
-    ## ── Column specification ─────────────────────────────────────────────────────────
+    ## ── Column specification ────────────────────────────────────
     ## Delimiter: ","
     ## chr   (5): bpaoarm, slq300, slq310, slq320, slq330
     ## dbl (310): seqn, ridageyr, sddsrvyr, ridstatr, riagendr, ridreth1, ridreth3,...
