@@ -17,7 +17,7 @@ library(DiagrammeR)
 ```
 
 ### The group members (names and UNIs)
-Disheng Jiang (dj2763), Yurou Liu (yl6109), Ruhui Shen (rs4788), Juan Tang (jt3649)
+Disheng Jiang (dj2763), Juan Tang (jt3649), Ruhui Shen (rs4788), Yurou Liu (yl6109)
 
 ### The tentative project title
 Exploring whether coffee is beneficial or harmful to human health by using the National Health and Nutrition Examination Survey (NHANES) datasets from the Centers for Disease Control and Prevention (CDC).

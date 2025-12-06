@@ -7,6 +7,11 @@ output:
     toc: true
     toc_float: true
 ---
+```{css, echo=FALSE}
+h2 {
+  margin-top: 80px;
+}
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
@@ -21,11 +26,6 @@ library(ggridges)
 analytic = read_csv("./analytic.csv")
 ```
 
-```{css, echo=FALSE}
-h2 {
-  margin-top: 80px;
-}
-```
 
 ## Scientific Title
 Exploring whether coffee is beneficial or harmful to human health by using the National Health and Nutrition Examination Survey (NHANES) datasets from the Centers for Disease Control and Prevention (CDC).
@@ -961,9 +961,24 @@ cvd_rg_interactive
 Linear models relating caffeine intake to total cholesterol, LDL, and HDL showed weak, imprecise associations: small positive slopes for total cholesterol and LDL and a small negative slope for HDL, all with non-significant p-values and R² ≈ 0. Scatterplots revealed broad variability in lipid levels at all intake levels and nearly flat fitted lines, though the directions of the slopes were generally consistent with the group comparisons between coffee drinkers and non-drinkers. Overall, within typical intake ranges, any dose–response relationship between caffeine and lipid biomarkers appears subtle and easily masked by diet, adiposity, medications, and other CVD risk factors, so these results are best viewed as descriptive and hypothesis-generating.
 
 
-## Discussion
-
-
 ## Conclusion
 
+### Discussion
+Using recent NHANES cycles, we compared adults with and without a consistent coffee-drinking habit and then examined continuous caffeine intake in relation to cardiometabolic and sleep-related biomarkers. Overall, our findings suggest that habitual coffee consumption is not strongly associated with major adverse profiles in blood pressure, lipids, glycemic markers, or sleep duration, although several small and potentially meaningful patterns emerged.
 
+For diabetes outcomes, coffee drinkers had slightly higher fasting glucose and HbA1c but notably lower fasting insulin compared with non-drinkers. In the regression analyses, caffeine dose showed almost flat relationships with HbA1c and glucose but a modest negative trend with insulin. This combination—similar glucose at somewhat lower insulin levels—is compatible with slightly better insulin sensitivity among higher-caffeine consumers, which is broadly consistent with prior literature suggesting a protective association between habitual coffee intake and type 2 diabetes risk. However, the absolute differences were small and the models had very low R², so these patterns should be interpreted as suggestive rather than causal.
+
+For cardiovascular markers, coffee drinkers had higher HDL alongside modestly higher LDL and total cholesterol, and regression slopes for caffeine intake were weak and imprecise. Blood pressure and pulse showed a similar picture: coffee drinkers and non-drinkers had broadly overlapping distributions, and caffeine intake was at most very weakly related to higher systolic blood pressure and slightly faster pulse. Sleep duration was also remarkably similar across coffee-habit groups; higher caffeine intake was only minimally associated with shorter average sleep. Together, these results point toward a largely neutral overall cardiometabolic profile for coffee drinkers, rather than strongly harmful or strongly beneficial effects.
+
+These findings are partly in line with what we expected based on prior studies: we saw no evidence that higher caffeine intake is dramatically harmful, and some patterns (lower insulin with comparable glucose, higher HDL) are consistent with potential metabolic benefits of coffee. At the same time, the weak dose–response relationships and tiny R² values highlight that, in this cross-sectional setting, caffeine explains very little of the large person-to-person variability in these biomarkers. Our analysis is limited by self-reported diet, a two-day definition of “coffee habit,” lack of adjustment for key confounders (age, BMI, smoking, diet quality, medications, socioeconomic factors), and the cross-sectional design, which prevents causal inference.
+
+An important insight from this project is that categorizing people as “coffee habit” vs “no coffee” captures broader lifestyle patterns, while continuous caffeine intake alone is a poor predictor of biomarker levels. Future work should incorporate multivariable models, explore non-linear dose–response relationships, separate coffee from other caffeinated beverages and added sugar/cream, and, ideally, use longitudinal data to study incident disease. Within the limits of our analysis, the data suggest that typical coffee consumption in U.S. adults is unlikely to have large detrimental effects on blood pressure, lipids, sleep, or glycemic control, and may be compatible with slightly improved insulin sensitivity.
+
+### Limitation
+This study has several important limitations. First, our definition of “coffee habit” is based on two 24-hour dietary recalls: participants who reported coffee on both days were treated as habitual drinkers, and those who reported none were treated as non-drinkers. This approach may misclassify long-term coffee habits, because two days may capture short-term intake and day-to-day variation rather than stable behavior. As a result, estimated associations may reflect acute responses or random fluctuation more than true long-term effects.
+
+Second, our analyses are cross-sectional and largely unadjusted. We did not control for many important confounders such as socioeconomic status, smoking, alcohol use, diet quality, physical activity, psychological stress, medication use, or pre-existing diseases. All of these factors are strongly related to both coffee consumption and cardiometabolic health and could easily explain part or all of the observed patterns. Self-reported diet and sleep also introduce measurement error, which likely attenuates any true dose–response relationship with caffeine.
+
+Third, we focused on total caffeine and a broad “coffee habit” category, without distinguishing types of coffee and additives (e.g., sugar, cream, specialty drinks) or other caffeinated beverages. Different preparation methods and co-consumed ingredients may have distinct health effects that our analysis could not separate.
+
+Future work should address these limitations by using richer exposure information (multiple recalls, food-frequency data, beverage type), applying multivariable and possibly non-linear models that adjust for key lifestyle and clinical confounders, and, ideally, analyzing longitudinal data to evaluate incident disease rather than cross-sectional biomarkers. Such extensions would allow a more rigorous assessment of whether coffee and caffeine have truly beneficial, harmful, or neutral effects on cardiometabolic health.
