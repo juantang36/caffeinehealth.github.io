@@ -2,6 +2,7 @@ name: "Final Project"
 output_dir: "."
 navbar:
   title: "Home"
+  href: index.html
   right:
     - text: "Proposal"
       href: proposal.html
