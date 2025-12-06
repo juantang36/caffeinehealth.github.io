@@ -7,7 +7,7 @@ navbar:
       href: proposal.html
     - text: "Report"
       href: report.html
-    - test: "Data"
+    - text: "Data"
       href: Data.html
     - text: "EDA"
       href: EDA.html
