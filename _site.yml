@@ -22,7 +22,7 @@ navbar:
       href: reference.html
     - icon: fa-github fa-lg
       href: https://github.com/juantang36/caffeinehealth.github.io.git
-    - icon: <i class="fa-solid fa-play"></i>
+    - icon: fa-solid fa-play
       href: https://www.youtube.com/watch?v=VWEf_SvoM5s
       
       
