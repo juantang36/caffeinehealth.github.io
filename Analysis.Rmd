@@ -20,6 +20,7 @@ We organized the analysis in two steps:
 - Comparison between groups of individuals with and without coffee-intake habits.
 - Regression analyses with continuous caffeine intake as the exposure.
 
+<br> 
 
 ## Group Comparisons: Coffee Intake vs No Coffe Intake
 
@@ -62,6 +63,8 @@ Coffee drinkers had higher average levels of all three lipid markers, although t
 From a CVD-risk perspective, this pattern is somewhat mixed but not clearly adverse. The higher HDL among coffee drinkers is generally considered protective, as higher HDL is associated with lower cardiovascular risk. At the same time, coffee drinkers also show slightly higher total cholesterol and possibly higher LDL-C, though the LDL difference is small and only borderline significant. The absolute differences in LDL-C and total cholesterol (≈3–6 mg/dL) are relatively modest compared with clinical thresholds used to define dyslipidemia, so their practical impact on risk is likely limited in isolation.
 
 As with other outcomes in this study, these comparisons are cross-sectional and unadjusted. Coffee drinkers may differ from non-drinkers in diet, BMI, smoking, alcohol use, physical activity, and use of lipid-lowering medications, all of which strongly influence lipid levels. Consequently, the observed associations should not be interpreted as causal effects of coffee itself on CVD risk. Rather, they highlight that adults with a coffee habit in NHANES tend to have a lipid profile characterized by higher HDL and slightly higher total cholesterol, a combination whose net impact on cardiovascular risk is uncertain and warrants further evaluation in adjusted regression models and longitudinal studies.
+
+<br> 
 
 ## Regression Analysis
 

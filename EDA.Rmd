@@ -23,6 +23,8 @@ analytic = read_csv("./analytic.csv")
 
 We selected data from August 21 to August 23 in the NHANES database, identifying individuals who consumed coffee in both random tests as having a coffee-drinking habit and assigning them to the experimental group. Those who did not consume coffee beverages in either test were classified as having no coffee-drinking habit and assigned to the control group. We visualized questionnaire results and biomarkers for both groups and conducted hypothesis testing.
 
+<br> 
+
 ## Group Comparisons: Coffee Intake vs No Coffe Intake
 
 ### Blood Pressure & Pulse
@@ -82,7 +84,7 @@ gg_bp_violin <- ggplot(bp_long,
 gg_bp_violin
 ```
 
-The distributions of systolic and diastolic blood pressure among groups that consumed coffee are shown in this figure. Violin shapes show the whole density and range of values, and integrated boxplots make it easy to compare medians and interquartile ranges. There are just little changes between the groups; for example, those who regularly drink coffee had somewhat higher systolic readings. It seems that missingness is not systematic, as the NA group exhibits behavior that is consistent with the other categories. Potential, however modest, correlations between blood pressure and regular coffee use are efficiently brought to light by this depiction.
+The distributions of systolic and diastolic blood pressure among groups that consumed coffee are shown in this figure. Violin shapes show the whole density and range of values, and integrated boxplots make it easy to compare medians and interquartile ranges. There are just little changes between the groups; for example, those who regularly drink coffee had somewhat higher systolic readings.
 
 - Plot: Mean Systolic & Diastolic BP (with 95% CI) by coffee habit
 
@@ -143,6 +145,8 @@ gg_pulse_ridge
 
 The ridgeline density plot visualizes pulse-rate distributions across coffee habits. While the overall shapes are similar, the coffee-habit group appears to trend slightly higher in pulse rate, though the overlap between groups is substantial. This plot effectively demonstrates distributional differences without relying on summary statistics and provides an intuitive sense of how pulse varies across the cohort.
 
+<br> 
+
 ### Sleep Status
 
 - Plot: Average sleep time by coffee habit
@@ -194,6 +198,8 @@ gg_sleep_paired
 ```
 
 Individual differences in sleep duration on weekdays and weekends are shown by this paired-line plot. People in every coffee group get more shut-eye on weekends, and the size of the difference between weekday and weekend sleep is about the same. Individual variability is shown by the dense cluster of light gray lines, while the group-average pattern is captured by the overlay black summary line. This graph shows that the difference in sleep between the weekdays and weekends is unaffected by coffee use.
+
+<br> 
 
 ### Diabetes Risk
 
@@ -336,6 +342,8 @@ Large p-value suggests no statistically significant difference in HbA1c between 
 The mean insulin level was  `r round(ttest_results_clean$mean_no[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)` μU/mL in the No group and `r round(ttest_results_clean$mean_yes[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)` μU/mL in the Yes group.  
 The mean difference (Yes − No) was  **`r round(ttest_results_clean$diff_mean[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)` μU/mL**  with a 95% CI of (`r round(ttest_results_clean$ci_low[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)`, `r round(ttest_results_clean$ci_high[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 2)`)  and a p-value of `r signif(ttest_results_clean$p_value[ttest_results_clean$biomarker=="Insulin (μU/mL)"], 3)`.  
 This reflects a statistically significant decrease in fasting insulin among coffee drinkers.
+
+<br> 
 
 ### Cardiovascular Disease Risk
 
