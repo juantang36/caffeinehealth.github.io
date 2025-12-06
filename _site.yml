@@ -4,11 +4,10 @@ output_dir: "."
 navbar:
   title: "Welcome page"   
 
-  left:                    
-    - text: "Home"
-      href: homepage.html  
 
   right:
+    - text: "Home"
+      href: homepage.html 
     - text: "Proposal"
       href: proposal.html
     - text: "Report"
@@ -28,5 +27,4 @@ output:
   html_document:
     theme: cerulean
 
-include: ["homepage.html"]   
 
