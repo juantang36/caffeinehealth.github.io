@@ -156,13 +156,17 @@ These tidy datasets were used to generate violin/boxplots and to run group-wise 
 ## Summary of Variables Used
 
 ### **Exposure Variables**
-- `coffee_habit_binary` (TRUE/FALSE): whether the individual have coffee drinking habit
-- `coffee_habit` ("No", "Yes")
-- `caffeine_mg` (continuous caffeine intake): the average daily caffeine intake (mg) by the individual
+- `coffee_habit_binary` : whether the individual have coffee drinking habit (TRUE/FALSE)
+- `coffee_habit`: original variable ("No", "Yes")
+- `caffeine_mg`: the average daily caffeine intake (mg) by the individual (continuous caffeine intake)
 
 ### **Blood Pressure Biomarkers**
+- `bpxsy1, bpxsy2, bpxsy3` Systolic Blood Pressure repeated measurements
+- `sbp`: mean systolic blood pressure (mmHg)
 
 ### **Sleep Biomarkers**
+- `slphours`: self-reported sleep duration (hours)
+- `slpdistrb`: indicator of sleep disturbance ("No", "Yes")
 
 ### **Diabetes Biomarkers**
 - `glycohemoglobin`: Glycohemoglobin (%) 
