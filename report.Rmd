@@ -2,13 +2,22 @@
 title: "Report"
 output: 
   html_document:
+    code_folding: hide
     theme: flatly
     toc: true
     toc_float: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(plotly)
+library(patchwork)
+library(readr)
+library(haven)
+library(janitor)
+library(ggplot2)
+analytic = read_csv("./analytic.csv")
 ```
 
 ## Scientific Title
@@ -232,17 +241,306 @@ These tidy datasets were used to generate violin/boxplots and to run group-wise 
 ## Regression Analysis
 
 #### Blood Pressure & Pulse
+```{r}
+bp_sleep_rg <- analytic |>
+  mutate(
+    coffee_group = factor(
+      coffee_habit_binary,
+      levels = c(0, 1),
+      labels = c("No coffee", "Coffee habit")
+    ), 
 
+    # Pressure
+    sbp = rowMeans(across(c(bpxosy1, bpxosy2, bpxosy3)), na.rm = TRUE),
+    dbp = rowMeans(across(c(bpxodi1, bpxodi2, bpxodi3)), na.rm = TRUE),
+
+    # Pulse
+    pulse = rowMeans(across(c(bpxopls1, bpxopls2, bpxopls3)), na.rm = TRUE),
+
+    # Sleep
+    sleep_weekday = sld012,
+    sleep_weekend = sld013,
+    sleep_avg = (sleep_weekday * 5 + sleep_weekend * 2) / 7,
+    caffeine_mg = (dr1tcaff + dr2tcaff) / 2
+  ) |> 
+   filter(!is.na(coffee_group))
+```
+
+##### Blood pressure regression model
+
+```{r}
+bp_rg = bp_sleep_rg %>% 
+  select(seqn, coffee_group, sbp, dbp, caffeine_mg)
+
+model_sbp = lm(sbp ~ caffeine_mg, data = bp_rg)
+model_dbp = lm(dbp ~ caffeine_mg, data = bp_rg)
+
+summary(model_sbp)
+summary(model_dbp)
+```
+
+##### Blood pressure regression plot
+
+```{r}
+bp_rg_long = bp_rg %>% 
+  pivot_longer(cols = c(sbp, dbp),
+               names_to = "bp_type",
+               values_to = "bp_value") %>% 
+  filter(coffee_group == "Coffee habit")
+
+bp_rg_plot = bp_rg_long %>% 
+  ggplot(aes(x = caffeine_mg, 
+             y = bp_value, 
+             color = bp_type)) + 
+  geom_point(size = 0.8, 
+             alpha = 0.4) + 
+  geom_smooth(method = "lm", 
+              se = TRUE, 
+              size = 0.8) + 
+  labs(x = "Caffeine intake (mg)", 
+       y = "Blood pressure (mmHg)", 
+       title = "Blood pressure vs caffeine intake") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  scale_color_discrete(name = "BP type")
+
+bp_rg_interactive = ggplotly(bp_rg_plot)
+bp_rg_interactive$x$data[[1]]$name <- "Diastolic BP"
+bp_rg_interactive$x$data[[2]]$name <- "Systolic BP"
+bp_rg_interactive
+```
 
 #### Sleep Status
 
+##### Sleep regression model 
+
+```{r}
+sleep_rg = bp_sleep_rg %>% 
+  select(seqn, coffee_group, sleep_avg, caffeine_mg)
+
+model_sleep = lm(sleep_avg ~ caffeine_mg, data = sleep_rg)
+
+summary(model_sleep)
+```
+
+## Sleep regression plot
+
+```{r}
+sleep_rg_time = sleep_rg %>% 
+  filter(coffee_group == "Coffee habit") %>%
+  ggplot(aes(x = caffeine_mg, 
+             y = sleep_avg)) + 
+  geom_point(size = 0.8, 
+             alpha = 0.4, 
+             color = "gray30") + 
+  geom_smooth(method = "lm", 
+              size = 0.8) + 
+  labs(x = "Caffeine intake (mg)", 
+       y = "Average sleep duration (hours)", 
+       title = "Average sleep time vs caffeine intake") + 
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+sleep_rg_interactive = ggplotly(sleep_rg_time)
+sleep_rg_interactive
+```
 
 #### Diabetes Risk
 
+```{r}
+# Data tidying
+analytic = read_csv("./analytic.csv")
+
+diabetes_rg = analytic |>
+  rename(
+    glycohemoglobin = lbxgh, 
+    insulin_uuml = lbxin, 
+    glucose_mgdl = lbxglu
+  ) |>
+  mutate(caffeine_mg = (dr1tcaff + dr2tcaff) / 2) %>% 
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    glycohemoglobin, 
+    insulin_uuml, 
+    glucose_mgdl, 
+    caffeine_mg
+  ) |>
+  dplyr::filter(
+    !is.na(glycohemoglobin), 
+    !is.na(insulin_uuml), 
+    !is.na(glucose_mgdl), 
+    coffee_habit_binary == "TRUE"
+  )
+```
+
+##### Diabetes regression model
+
+```{r}
+
+model_glyco = lm(glycohemoglobin ~ caffeine_mg, data = diabetes_rg)
+model_insulin = lm(insulin_uuml ~ caffeine_mg, data = diabetes_rg)
+model_glucose = lm(glucose_mgdl ~ caffeine_mg, data = diabetes_rg)
+
+summary(model_glyco)
+summary(model_insulin)
+summary(model_glucose)
+```
+
+##### diabetes regression plot
+
+```{r}
+glyco_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = glycohemoglobin)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(title = "Diabetes biomarkers vs caffeine intake", x = " ", y = "Biomarker level") + 
+  theme(plot.title = element_text(hjust = .5))
+
+insulin_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = insulin_uuml)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = "Caffeine (mg)", y = " ") 
+
+glucose_rg = ggplot(diabetes_rg, aes(x = caffeine_mg, y = glucose_mgdl)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = " ", y = " ")
+
+diabetes_rg_interactive = subplot(
+  ggplotly(glyco_rg, tooltip = "all"),
+  ggplotly(insulin_rg, tooltip = "all"),
+  ggplotly(glucose_rg, tooltip = "all"),
+  nrows = 1, 
+  titleX = TRUE, 
+  titleY = TRUE, 
+  margin = 0.05) %>% 
+  layout(
+    annotations = list(
+      list(
+        x = 0.16, y = 1.07,
+        text = "<b>Glycohemoglobin (%)</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.5, y = 1.07,
+        text = "<b>Insulin (μU/mL)</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.84, y = 1.07,
+        text = "<b>Glucose (mg/dL)</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      )
+    ),
+    margin = list(t = 80), 
+    showlegend = FALSE
+  ) 
+
+diabetes_rg_interactive
+```
 
 #### Cardiovascular Disease Risk
 
+```{r}
+# Data tidying
+cvd_rg = analytic |>
+  rename(
+    total_cholesterol = lbxtc, # unit = mg/dl
+    hdl = lbdhdd, # good cholesterol, unit = mg/dl
+    ldl = lbdldlm # bad cholesterol, unit = mg/dl (Martin-Hopkins)
+  ) |>
+  mutate(caffeine_mg = (dr1tcaff + dr2tcaff) / 2) %>% 
+  select(
+    seqn, 
+    coffee_habit_binary, 
+    hdl, 
+    ldl, 
+    total_cholesterol,
+    caffeine_mg
+  ) |>
+  filter(
+    !is.na(hdl), 
+    !is.na(ldl), 
+    !is.na(total_cholesterol), 
+    coffee_habit_binary == "TRUE"
+  )
+```
 
+##### CVD regression model
+
+```{r}
+
+model_chlesterol = lm(total_cholesterol ~ caffeine_mg, data = cvd_rg)
+model_hdl = lm(hdl ~ caffeine_mg, data = cvd_rg)
+model_ldl = lm(ldl ~ caffeine_mg, data = cvd_rg)
+
+summary(model_chlesterol)
+summary(model_hdl)
+summary(model_ldl)
+```
+
+##### CVD regression plot
+
+```{r}
+# Visuallizatoin
+chlesterol_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = total_cholesterol)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(title = "CVD biomarkers vs caffeine intake", x = " ", y = "Biomarker level (mg/dL)") + 
+  theme(plot.title = element_text(hjust = .5))
+
+hdl_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = hdl)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = "Caffeine (mg)", y = " ")
+
+ldl_rg = ggplot(cvd_rg, aes(x = caffeine_mg, y = ldl)) +
+  geom_point(size = .8, alpha = .5, color = "gray30") +
+  geom_smooth(method = "lm", se = TRUE, size = .8) +
+  labs(x = " ", y = " ") 
+
+cvd_rg_interactive = subplot(
+  ggplotly(chlesterol_rg, tooltip = "all"),
+  ggplotly(hdl_rg, tooltip = "all"),
+  ggplotly(ldl_rg, tooltip = "all"),
+  nrows = 1, 
+  titleX = TRUE, 
+  titleY = TRUE, 
+  margin = 0.05) %>% 
+  layout(
+    annotations = list(
+      list(
+        x = 0.16, y = 1.07,
+        text = "<b>Total Chlesterol</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.5, y = 1.07,
+        text = "<b>HDL</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      ),
+      list(
+        x = 0.84, y = 1.07,
+        text = "<b>LDL</b>",
+        xref = "paper", yref = "paper",
+        xanchor = "center", showarrow = FALSE,
+        font = list(size = 12)
+      )
+    ),
+    margin = list(t = 80), 
+    showlegend = FALSE
+  ) 
+
+cvd_rg_interactive
+```
 
 ## Discussion
 
