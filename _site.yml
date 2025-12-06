@@ -7,7 +7,7 @@ navbar:
 
   right:
     - text: "Home"
-      href: homepage.html 
+      href: Homepage.html 
     - text: "Proposal"
       href: proposal.html
     - text: "Report"
