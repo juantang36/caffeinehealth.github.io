@@ -21,6 +21,12 @@ library(ggridges)
 analytic = read_csv("./analytic.csv")
 ```
 
+```{css, echo=FALSE}
+h2 {
+  margin-top: 80px;
+}
+```
+
 ## Scientific Title
 Exploring whether coffee is beneficial or harmful to human health by using the National Health and Nutrition Examination Survey (NHANES) datasets from the Centers for Disease Control and Prevention (CDC).
 
@@ -223,6 +229,8 @@ These tidy datasets were used to generate violin/boxplots and to run group-wise 
 
 
 ## Exploratory Data Analysis
+We selected data from August 21 to August 23 in the NHANES database, identifying individuals who consumed coffee in both random tests as having a coffee-drinking habit and assigning them to the experimental group. Those who did not consume coffee beverages in either test were classified as having no coffee-drinking habit and assigned to the control group. We visualized questionnaire results and biomarkers for both groups and conducted hypothesis testing.
+
 ### Group Comparisons: Coffee Intake vs No Coffe Intake
 
 #### Blood Pressure & Pulse
@@ -475,7 +483,7 @@ Outcome/biomarkers:
 
 - Glycohemoglobin (%)
 
-- Insulin (mu/mL)
+- Insulin (μU/mL)
 
 - Glucose (mg/dL)
 
@@ -639,7 +647,7 @@ Total cholesterol was also significantly higher among coffee drinkers (mean diff
 
 ## Regression Analysis
 
-#### Blood Pressure & Pulse
+### Blood Pressure & Pulse
 
 ```{r}
 bp_sleep_rg <- analytic |>
@@ -709,7 +717,10 @@ bp_rg_interactive$x$data[[2]]$name <- "Systolic BP"
 bp_rg_interactive
 ```
 
-#### Sleep Status
+Simple linear regressions of systolic and diastolic blood pressure on daily caffeine intake showed only very weak positive slopes (≈0.31 mmHg and 0.06 mmHg higher per 100 mg of caffeine, respectively), with non-significant p-values and R² ≈ 0. Scatterplots confirmed that blood pressure varies widely at all intake levels and that fitted lines are almost flat. Overall, within the range of usual consumption in NHANES, caffeine intake appears at most minimally associated with higher SBP and essentially unrelated to DBP, and any true effect is likely small relative to other determinants of blood pressure.
+
+
+### Sleep Status
 
 - Sleep regression model 
 
@@ -743,7 +754,10 @@ sleep_rg_interactive = ggplotly(sleep_rg_time)
 sleep_rg_interactive
 ```
 
-#### Diabetes Risk
+Regressing average nightly sleep time on caffeine intake suggested a slight negative trend (about 1–2 minutes less sleep per 100 mg of caffeine), but this association was not statistically significant and again explained virtually none of the variation in sleep time (R² ≈ 0.0006). The scatterplot showed most participants sleeping 7–8 hours regardless of intake, with only a subtle downward tilt in the regression line. These findings indicate that habitual caffeine use may be linked to marginally shorter sleep, but the effect is very small and easily overshadowed by factors such as work schedules and overall lifestyle.
+
+
+### Diabetes Risk
 
 ```{r}
 # Data tidying
@@ -842,7 +856,10 @@ diabetes_rg_interactive = subplot(
 diabetes_rg_interactive
 ```
 
-#### Cardiovascular Disease Risk
+For diabetes biomarkers, regressions of HbA1c, fasting glucose, and fasting insulin on caffeine intake yielded small, non-significant slopes, with HbA1c and glucose showing slightly negative trends and insulin showing the clearest negative association (≈0.37 μU/mL lower insulin per 100 mg of caffeine). Individuals with very high insulin levels were concentrated at low or zero caffeine intake, and higher-intake participants tended to have lower insulin. Although R² values were near zero, these patterns are compatible with the hypothesis that higher caffeine intake is not associated with worse glycemic control and may be related to slightly lower insulin requirements, suggesting possible improvement in insulin sensitivity that warrants further, adjusted analyses.
+
+
+### Cardiovascular Disease Risk
 
 ```{r}
 # Data tidying
@@ -940,6 +957,9 @@ cvd_rg_interactive = subplot(
 
 cvd_rg_interactive
 ```
+
+Linear models relating caffeine intake to total cholesterol, LDL, and HDL showed weak, imprecise associations: small positive slopes for total cholesterol and LDL and a small negative slope for HDL, all with non-significant p-values and R² ≈ 0. Scatterplots revealed broad variability in lipid levels at all intake levels and nearly flat fitted lines, though the directions of the slopes were generally consistent with the group comparisons between coffee drinkers and non-drinkers. Overall, within typical intake ranges, any dose–response relationship between caffeine and lipid biomarkers appears subtle and easily masked by diet, adiposity, medications, and other CVD risk factors, so these results are best viewed as descriptive and hypothesis-generating.
+
 
 ## Discussion
 
