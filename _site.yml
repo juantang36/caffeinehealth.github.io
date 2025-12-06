@@ -9,6 +9,8 @@ navbar:
       href: report.html
     - text: "Analysis"
       href: Analysis.html
+   - text: "Reference"
+      href: reference.html
     - icon: fa-github fa-lg
       href: https://github.com/juantang36/caffeinehealth.github.io.git
 
