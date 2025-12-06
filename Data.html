@@ -11,12 +11,12 @@
 
 
 
-<title>Report</title>
+<title>Data Sources</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -224,69 +221,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -294,16 +228,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -347,79 +271,15 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Report</h1>
+<h1 class="title toc-ignore">Data Sources</h1>
 
 </div>
 
 
-<div id="scientific-title" class="section level2">
-<h2>Scientific Title</h2>
-<p>Exploring whether coffee is beneficial or harmful to human health by
-using the National Health and Nutrition Examination Survey (NHANES)
-datasets from the Centers for Disease Control and Prevention (CDC).</p>
-</div>
-<div id="group-members" class="section level2">
-<h2>Group Members</h2>
-<p>Disheng Jiang (dj2763), Juan Tang (jt3649), Ruhui Shen (rs4788),
-Yurou Liu (yl6109)</p>
-</div>
-<div id="motivation" class="section level2">
-<h2>Motivation</h2>
-<p>Coffee, as one of the most popular beverages in the world, is highly
-favored by people. Since the caffeine in coffee has a regulatory effect
-on the central nervous system (Herqutanto et al., 2024), coffee is
-widely consumed for alertness. The debate over whether coffee is
-beneficial or harmful to human health is long standing. Some researchers
-suggest that moderate coffee consumption may help reduce the risk of
-type 2 diabetes and cardiovascular disease, and may be associated with
-anti-inflammatory and antioxidant effects (Barrea et al., 2023).
-However, other studies indicate that coffee intake could potentially
-increase the risk of certain cancers and fractures (Asoudeh et al.,
-2023; Carter et al., 2022). We wanted to explore the relationship
-between coffee intake and health through the analysis of large amounts
-of data and identify a reasonable intake level.</p>
-<p>NHANES is uniquely well-suited for this study. NHANES contains
-nationally representative sampling with detailed, standardized
-measurements that are directly relevant to caffeine. It also contains
-clinically measured outcomes like blood pressure, pulse and BMI,
-meanwhile providing rich covariates such as age, sex, physical activity,
-and socioeconomic markers. By utilizing the abundant raw data, we can
-learn about the effect of coffee on human health and dose-response
-patterns through data analysis and draw transparent and reproducible
-public health inferences.</p>
-</div>
-<div id="related-work" class="section level2">
-<h2>Related work</h2>
-<p>Our interest in coffee and health grew from prior coursework and
-lived experience. One member of our group studied food science as an
-undergraduate and had previously participated in a simple discussion
-about whether coffee is beneficial to health. Coffee is one of the most
-popular beverages among young people, and we are all very interested in
-this topic. As students in the School of Public Health, we have a strong
-desire to explore health-related issues. Therefore, when we received
-this project assignment, we believed it to be an excellent opportunity
-to apply our knowledge of statistics and data science to further
-investigate the questions on our minds.</p>
-</div>
-<div id="initial-questions" class="section level2">
-<h2>Initial questions</h2>
-<p>Our initial questions were structured to explore potential
-associations between coffee intake and health outcomes:</p>
-<ul>
-<li>Does coffee consumption affect indicators such as blood pressure,
-pulse rate, and sleep?</li>
-<li>Will coffee consumption influence relevant biomarkers and increase
-the risk of developing diabetes?</li>
-<li>Whether long-term coffee consumption increases or decreases the risk
-of cardiovascular disease?</li>
-<li>Is there a dose–response between caffeine intake and health
-outcomes?</li>
-</ul>
-</div>
-<div id="data" class="section level2">
-<h2>Data</h2>
-<div id="nhanes-dataset" class="section level4">
-<h4>NHANES Dataset</h4>
+<div id="data-summary" class="section level2">
+<h2>Data Summary</h2>
+<div id="nhanes-dataset" class="section level3">
+<h3>NHANES Dataset</h3>
 <p>We used data from the <strong>2021–2023 National Health and Nutrition
 Examination Survey (NHANES)</strong>, an ongoing program conducted by
 the U.S. Centers for Disease Control and Prevention (CDC). NHANES
@@ -455,8 +315,8 @@ days (DR1IFF, DR2IFF)</li>
 </ul>
 <hr />
 </div>
-<div id="construction-of-the-analytic-dataset" class="section level4">
-<h4>Construction of the Analytic Dataset</h4>
+<div id="construction-of-the-analytic-dataset" class="section level3">
+<h3>Construction of the Analytic Dataset</h3>
 <p>The first major step in our workflow was to build <strong>a single,
 unified “analytic” dataset</strong> that contains all relevant NHANES
 variables merged into one table (<code>analytic.csv</code>). This file
@@ -465,8 +325,8 @@ serves as the foundation for all subsequent analyses.</p>
 identifier <code>SEQN</code>.</p>
 <hr />
 </div>
-<div id="exposure-variable-coffee-habit" class="section level4">
-<h4>Exposure Variable: Coffee Habit</h4>
+<div id="exposure-variable-coffee-habit" class="section level3">
+<h3>Exposure Variable: Coffee Habit</h3>
 <p>Coffee intake was defined using the 24-hour dietary recall data and
 USDA food codes:</p>
 <ol style="list-style-type: decimal">
@@ -495,8 +355,8 @@ visualization and statistical tests.</li>
 </ul>
 </div>
 <div id="caffeine-intake-continuous-exposure-for-regression"
-class="section level4">
-<h4>Caffeine Intake (Continuous Exposure for Regression)</h4>
+class="section level3">
+<h3>Caffeine Intake (Continuous Exposure for Regression)</h3>
 <p>In addition to coffee habit, we computed <strong>total caffeine
 intake (mg/day)</strong> to examine dose–response relationships. New
 variable <code>caffeine_mg</code> was calculated by averaging total
@@ -512,8 +372,9 @@ DR2TOT) including:</p>
 <li><code>DR2TCAFF</code> – total caffeine intake on Day 2 (mg)</li>
 </ul>
 </div>
-<div id="data-cleaning-part-one" class="section level3">
-<h3>Data Cleaning: Part One</h3>
+</div>
+<div id="data-cleaning-part-one" class="section level2">
+<h2>Data Cleaning: Part One</h2>
 <p>All data processing was conducted in <strong>RStudio</strong> using
 <strong>R Markdown</strong> and tidyverse tools.</p>
 <p>In the first cleaning stage, we:</p>
@@ -569,8 +430,8 @@ dietary and biomarker data, along with an initial classification of
 coffee consumption.</p>
 <hr />
 </div>
-<div id="data-cleaning-part-two" class="section level3">
-<h3>Data Cleaning: Part Two</h3>
+<div id="data-cleaning-part-two" class="section level2">
+<h2>Data Cleaning: Part Two</h2>
 <p>The second cleaning stage focused on preparing an analysis-ready
 data/variables for our health outcomes.</p>
 <p>Key steps included:</p>
@@ -618,10 +479,10 @@ consumption</li>
 group-wise t-tests.</p>
 <hr />
 </div>
-<div id="summary-of-variables-used" class="section level3">
-<h3>Summary of Variables Used</h3>
-<div id="exposure-variables" class="section level4">
-<h4><strong>Exposure Variables</strong></h4>
+<div id="summary-of-variables-used" class="section level2">
+<h2>Summary of Variables Used</h2>
+<div id="exposure-variables" class="section level3">
+<h3><strong>Exposure Variables</strong></h3>
 <ul>
 <li><code>coffee_habit_binary</code> (TRUE/FALSE): whether the
 individual have coffee drinking habit</li>
@@ -630,22 +491,22 @@ individual have coffee drinking habit</li>
 daily caffeine intake (mg) by the individual</li>
 </ul>
 </div>
-<div id="blood-pressure-biomarkers" class="section level4">
-<h4><strong>Blood Pressure Biomarkers</strong></h4>
+<div id="blood-pressure-biomarkers" class="section level3">
+<h3><strong>Blood Pressure Biomarkers</strong></h3>
 </div>
-<div id="sleep-biomarkers" class="section level4">
-<h4><strong>Sleep Biomarkers</strong></h4>
+<div id="sleep-biomarkers" class="section level3">
+<h3><strong>Sleep Biomarkers</strong></h3>
 </div>
-<div id="diabetes-biomarkers" class="section level4">
-<h4><strong>Diabetes Biomarkers</strong></h4>
+<div id="diabetes-biomarkers" class="section level3">
+<h3><strong>Diabetes Biomarkers</strong></h3>
 <ul>
 <li><code>glycohemoglobin</code>: Glycohemoglobin (%)</li>
 <li><code>glucose_mgdl</code>: Fasting Glucose (mg/dL)</li>
 <li><code>insulin_uuml</code>: Insulin (µU/mL)</li>
 </ul>
 </div>
-<div id="cvd-biomarkers" class="section level4">
-<h4><strong>CVD Biomarkers</strong></h4>
+<div id="cvd-biomarkers" class="section level3">
+<h3><strong>CVD Biomarkers</strong></h3>
 <ul>
 <li><code>hdl</code>: Direct HDL-Cholesterol (mg/dL)</li>
 <li><code>ldl</code>: LDL-Cholesterol, Martin-Hopkins measurement
@@ -653,17 +514,15 @@ daily caffeine intake (mg) by the individual</li>
 <li><code>total_cholesterol</code>: Total Cholesterol (mg/dL)</li>
 </ul>
 </div>
-<div id="demographics" class="section level4">
-<h4><strong>Demographics</strong></h4>
+<div id="demographics" class="section level3">
+<h3><strong>Demographics</strong></h3>
 <ul>
 <li><code>seqn</code>: Respondent sequence number</li>
 <li><code>ridageyr</code>: Age in years at screening</li>
 </ul>
 <hr />
-</div>
-</div>
-<div id="notes" class="section level3">
-<h3>Notes</h3>
+<div id="notes" class="section level4">
+<h4>Notes</h4>
 <ul>
 <li>All analyses (plots, t-tests, regressions) use <strong>subsets taken
 from analytic.csv</strong>, not raw NHANES files.<br />
@@ -677,51 +536,10 @@ NHANES modules.</li>
 </ul>
 </div>
 </div>
-<div id="exploratory-data-analysis" class="section level2">
-<h2>Exploratory Data Analysis</h2>
-<div id="group-comparisons-coffee-intake-vs-no-coffe-intake"
-class="section level3">
-<h3>Group Comparisons: Coffee Intake vs No Coffe Intake</h3>
-<div id="blood-pressure-pulse" class="section level4">
-<h4>Blood Pressure &amp; Pulse</h4>
-</div>
-<div id="sleep-status" class="section level4">
-<h4>Sleep Status</h4>
-</div>
-<div id="diabetes-risk" class="section level4">
-<h4>Diabetes Risk</h4>
-</div>
-<div id="cardiovascular-disease-risk" class="section level4">
-<h4>Cardiovascular Disease Risk</h4>
-</div>
-</div>
-</div>
-<div id="regression-analysis" class="section level2">
-<h2>Regression Analysis</h2>
-<div id="blood-pressure-pulse-1" class="section level4">
-<h4>Blood Pressure &amp; Pulse</h4>
-</div>
-<div id="sleep-status-1" class="section level4">
-<h4>Sleep Status</h4>
-</div>
-<div id="diabetes-risk-1" class="section level4">
-<h4>Diabetes Risk</h4>
-</div>
-<div id="cardiovascular-disease-risk-1" class="section level4">
-<h4>Cardiovascular Disease Risk</h4>
-</div>
-</div>
-<div id="discussion" class="section level2">
-<h2>Discussion</h2>
-</div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
 </div>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -754,35 +572,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

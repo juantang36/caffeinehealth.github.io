@@ -1,46 +1,14 @@
 ---
-title: "Report"
-output: 
-  html_document:
-    theme: flatly
-    toc: true
-    toc_float: true
+title: "Data Sources"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## Data Summary
 
-## Scientific Title
-Exploring whether coffee is beneficial or harmful to human health by using the National Health and Nutrition Examination Survey (NHANES) datasets from the Centers for Disease Control and Prevention (CDC).
-
-
-## Group Members
-Disheng Jiang (dj2763), Juan Tang (jt3649), Ruhui Shen (rs4788), Yurou Liu (yl6109)
-
-
-## Motivation
-Coffee, as one of the most popular beverages in the world, is highly favored by people. Since the caffeine in coffee has a regulatory effect on the central nervous system (Herqutanto et al., 2024), coffee is widely consumed for alertness. The debate over whether coffee is beneficial or harmful to human health is long standing. Some researchers suggest that moderate coffee consumption may help reduce the risk of type 2 diabetes and cardiovascular disease, and may be associated with anti-inflammatory and antioxidant effects (Barrea et al., 2023). However, other studies indicate that coffee intake could potentially increase the risk of certain cancers and fractures (Asoudeh et al., 2023; Carter et al., 2022). We wanted to explore the relationship between coffee intake and health through the analysis of large amounts of data and identify a reasonable intake level.
-
-NHANES is uniquely well-suited for this study. NHANES contains nationally representative sampling with detailed, standardized measurements that are directly relevant to caffeine. It also contains clinically measured outcomes like blood pressure, pulse and BMI, meanwhile providing rich covariates such as age, sex, physical activity, and socioeconomic markers. By utilizing the abundant raw data, we can learn about the effect of coffee on human health and dose-response patterns through data analysis and draw transparent and reproducible public health inferences.
-
-
-## Related work
-Our interest in coffee and health grew from prior coursework and lived experience. One member of our group studied food science as an undergraduate and had previously participated in a simple discussion about whether coffee is beneficial to health. Coffee is one of the most popular beverages among young people, and we are all very interested in this topic. As students in the School of Public Health, we have a strong desire to explore health-related issues. Therefore, when we received this project assignment, we believed it to be an excellent opportunity to apply our knowledge of statistics and data science to further investigate the questions on our minds.
-
-
-## Initial questions
-Our initial questions were structured to explore potential associations between coffee intake and health outcomes:
-
-- Does coffee consumption affect indicators such as blood pressure, pulse rate, and sleep?
-- Will coffee consumption influence relevant biomarkers and increase the risk of developing diabetes?
-- Whether long-term coffee consumption increases or decreases the risk of cardiovascular disease?
-- Is there a dose–response between caffeine intake and health outcomes?
-
-
-## Data
-
-#### NHANES Dataset
+### NHANES Dataset
 
 We used data from the **2021–2023 National Health and Nutrition Examination Survey (NHANES)**, an ongoing program conducted by the U.S. Centers for Disease Control and Prevention (CDC). NHANES combines interviews, physical examinations, and laboratory measurements to provide nationally representative information on the health and nutritional status of the U.S. population.
 
@@ -63,7 +31,7 @@ Our project draws on several NHANES data:
 
 ---
 
-#### Construction of the Analytic Dataset
+### Construction of the Analytic Dataset
 
 The first major step in our workflow was to build **a single, unified “analytic” dataset** that contains all relevant NHANES variables merged into one table (`analytic.csv`). This file serves as the foundation for all subsequent analyses.
 
@@ -71,7 +39,7 @@ All datasets mentioned above were merged using the unique participant identifier
 
 ---
 
-#### Exposure Variable: Coffee Habit
+### Exposure Variable: Coffee Habit
 
 Coffee intake was defined using the 24-hour dietary recall data and USDA food codes:
 
@@ -86,7 +54,7 @@ Participants who consumed coffee on only one day were excluded from the binary �
 - `coffee_habit_binary` (TRUE for Yes, FALSE for No)  
 - `coffee_habit` (factor with levels “No”, “Yes”) used for visualization and statistical tests.
 
-#### Caffeine Intake (Continuous Exposure for Regression)
+### Caffeine Intake (Continuous Exposure for Regression)
 
 In addition to coffee habit, we computed **total caffeine intake (mg/day)** to examine dose–response relationships. New variable `caffeine_mg` was calculated by averaging total caffeine intake on both recall days:
 Average caffeine intake:
@@ -102,7 +70,7 @@ Data was drawn from NHANES's total nutrient intake files (DR1TOT / DR2TOT) inclu
 - `DR2TCAFF` – total caffeine intake on Day 2 (mg)
 
 
-### Data Cleaning: Part One
+## Data Cleaning: Part One
 
 All data processing was conducted in **RStudio** using **R Markdown** and tidyverse tools.
 
@@ -146,7 +114,7 @@ The result of Part One was a wide analytic dataset containing merged dietary and
 
 ---
 
-### Data Cleaning: Part Two
+## Data Cleaning: Part Two
 
 The second cleaning stage focused on preparing an analysis-ready data/variables for our health outcomes.
 
@@ -179,74 +147,34 @@ These tidy datasets were used to generate violin/boxplots and to run group-wise 
    
 ---
 
-### Summary of Variables Used
+## Summary of Variables Used
 
-#### **Exposure Variables**
+### **Exposure Variables**
 - `coffee_habit_binary` (TRUE/FALSE): whether the individual have coffee drinking habit
 - `coffee_habit` ("No", "Yes")
 - `caffeine_mg` (continuous caffeine intake): the average daily caffeine intake (mg) by the individual
 
-#### **Blood Pressure Biomarkers**
+### **Blood Pressure Biomarkers**
 
-#### **Sleep Biomarkers**
+### **Sleep Biomarkers**
 
-#### **Diabetes Biomarkers**
+### **Diabetes Biomarkers**
 - `glycohemoglobin`: Glycohemoglobin (%) 
 - `glucose_mgdl`: Fasting Glucose (mg/dL)
 - `insulin_uuml`: Insulin (µU/mL)
 
-#### **CVD Biomarkers**
+### **CVD Biomarkers**
 - `hdl`: Direct HDL-Cholesterol (mg/dL)
 - `ldl`: LDL-Cholesterol, Martin-Hopkins measurement (mg/dL)
 - `total_cholesterol`: Total Cholesterol (mg/dL)
 
-#### **Demographics**
+### **Demographics**
 - `seqn`: Respondent sequence number
 - `ridageyr`: Age in years at screening
 
 ---
-### Notes
+#### Notes
 - All analyses (plots, t-tests, regressions) use **subsets taken from analytic.csv**, not raw NHANES files.  
 - The master dataset contains **all participants, all examination/nutrient/lab variables**, and is filtered only at the step of constructing domain-specific datasets.  
 - This design ensures reproducibility and avoids repeated merging of NHANES modules.
-
-
-
-## Exploratory Data Analysis
-### Group Comparisons: Coffee Intake vs No Coffe Intake
-
-#### Blood Pressure & Pulse
-
-
-#### Sleep Status
-
-
-#### Diabetes Risk
-
-
-#### Cardiovascular Disease Risk
-
-
-
-
-## Regression Analysis
-
-#### Blood Pressure & Pulse
-
-
-#### Sleep Status
-
-
-#### Diabetes Risk
-
-
-#### Cardiovascular Disease Risk
-
-
-
-## Discussion
-
-
-## Conclusion
-
 
