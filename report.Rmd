@@ -19,6 +19,8 @@ library(haven)
 library(janitor)
 library(ggplot2)
 library(ggridges)
+library(broom)
+library(kableExtra)
 analytic = read_csv("./analytic.csv")
 ```
 
@@ -673,9 +675,8 @@ bp_sleep_rg <- analytic |>
    filter(!is.na(coffee_group))
 ```
 
-- Blood pressure regression model
-
-```{r}
+```{r Blood pressure regression, include=FALSE}
+# Blood pressure regression
 bp_rg = bp_sleep_rg %>% 
   select(seqn, coffee_group, sbp, dbp, caffeine_mg)
 
@@ -684,6 +685,30 @@ model_dbp = lm(dbp ~ caffeine_mg, data = bp_rg)
 
 summary(model_sbp)
 summary(model_dbp)
+```
+
+- SBP regression model
+```{r}
+model_sbp %>% 
+  tidy(conf.int = TRUE) %>% 
+  mutate(across(where(is.numeric), round, 3)) %>% 
+  kable(
+    format = "html",
+    caption = "Linear Regression: SBP on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
+```
+
+- DBP regression model
+```{r}
+model_dbp %>% 
+  tidy(conf.int = TRUE) %>% 
+  mutate(across(where(is.numeric), round, 3)) %>% 
+  kable(
+    format = "html",
+    caption = "Linear Regression: DBP on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
 ```
 
 - Blood pressure regression plot
@@ -720,16 +745,25 @@ Simple linear regressions of systolic and diastolic blood pressure on daily caff
 
 
 ### Sleep Status
-
-- Sleep regression model 
-
-```{r}
+```{r include=FALSE}
 sleep_rg = bp_sleep_rg %>% 
   select(seqn, coffee_group, sleep_avg, caffeine_mg)
 
 model_sleep = lm(sleep_avg ~ caffeine_mg, data = sleep_rg)
 
 summary(model_sleep)
+```
+
+- Sleep regression model 
+```{r}
+model_sleep %>%
+  tidy(conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), round, 3)) %>%
+  kable(
+    format = "html",
+    caption = "Linear Regression: Sleep Duration on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
 ```
 
 - Sleep regression plot
@@ -785,9 +819,8 @@ diabetes_rg = analytic |>
   )
 ```
 
-- Diabetes regression model
-
-```{r}
+```{r Diabetes regression model, include=FALSE}
+# Diabetes regression model
 model_glyco = lm(glycohemoglobin ~ caffeine_mg, data = diabetes_rg)
 model_insulin = lm(insulin_uuml ~ caffeine_mg, data = diabetes_rg)
 model_glucose = lm(glucose_mgdl ~ caffeine_mg, data = diabetes_rg)
@@ -795,6 +828,44 @@ model_glucose = lm(glucose_mgdl ~ caffeine_mg, data = diabetes_rg)
 summary(model_glyco)
 summary(model_insulin)
 summary(model_glucose)
+```
+
+- Glycohemoglobin ~ caffeine
+```{r}
+model_glyco %>%
+  tidy(conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), round, 3)) %>%
+  kable(
+    format = "html",
+    caption = "Regression: Glycohemoglobin (%) on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
+
+```
+
+- Insulin ~ caffeine
+```{r}
+model_insulin %>%
+  tidy(conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), round, 3)) %>%
+  kable(
+    format = "html",
+    caption = "Regression: Insulin (µU/mL) on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
+
+```
+
+- Glucose ~ caffeine
+```{r}
+model_glucose %>%
+  tidy(conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), round, 3)) %>%
+  kable(
+    format = "html",
+    caption = "Regression: Blood Glucose (mg/dL) on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
 ```
 
 - Diabetes regression plot
@@ -885,10 +956,8 @@ cvd_rg = analytic |>
   )
 ```
 
-- CVD regression model
-
-```{r}
-
+```{r CVD regression model, include=FALSE}
+# CVD regression model
 model_chlesterol = lm(total_cholesterol ~ caffeine_mg, data = cvd_rg)
 model_hdl = lm(hdl ~ caffeine_mg, data = cvd_rg)
 model_ldl = lm(ldl ~ caffeine_mg, data = cvd_rg)
@@ -896,6 +965,45 @@ model_ldl = lm(ldl ~ caffeine_mg, data = cvd_rg)
 summary(model_chlesterol)
 summary(model_hdl)
 summary(model_ldl)
+```
+
+- Total Cholesterol ~ Caffeine Intake
+
+```{r}
+model_chlesterol %>%
+  tidy(conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), round, 3)) %>%
+  kable(
+    format = "html",
+    caption = "Regression: Total Cholesterol (mg/dL) on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
+```
+
+- HDL ~ Caffeine Intake
+
+```{r}
+model_hdl %>%
+  tidy(conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), round, 3)) %>%
+  kable(
+    format = "html",
+    caption = "Regression: HDL Cholesterol (mg/dL) on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
+```
+
+- LDL ~ Caffeine Intake
+
+```{r}
+model_ldl %>%
+  tidy(conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), round, 3)) %>%
+  kable(
+    format = "html",
+    caption = "Regression: LDL Cholesterol (mg/dL) on Caffeine Intake"
+  ) %>%
+  kable_styling(full_width = FALSE)
 ```
 
 - CVD regression plot
