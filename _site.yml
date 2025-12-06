@@ -2,7 +2,7 @@ name: "Final Project"
 output_dir: "."
 
 navbar:
-  title: "Welcome page"   
+  title: "Welcome"   
 
 
   right:
