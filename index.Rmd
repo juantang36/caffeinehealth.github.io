@@ -1,0 +1,20 @@
+---
+title: "Is Coffee Helpful or Harmful?"
+output: 
+  html_document:
+    theme: flatly
+    toc_float: true
+---
+
+### **WELCOME TO OUR WEBSITE!**
+
+<img src="coffee_image.png" style="width:75%">
+
+*Image source:* [unocasa](https://unocasa.com/blogs/tips/types-of-coffee) 
+
+# Motivation
+Coffee is one of the most widely consumed beverages in the world, but existing research offers mixed evidence. Some studies suggest benefits like lower diabetes or cardiovascular risk, while others point to possible harms, like elevated blood pressure or disrupted sleep. Because almost everyone drinks coffee, we wanted to take a closer look using objective, nationally representative measurements from NHANES.
+
+***
+
+An overview of this project can be viewed through our screencast

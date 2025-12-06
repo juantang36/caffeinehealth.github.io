@@ -2,7 +2,7 @@ name: "Final Project"
 output_dir: "."
 navbar:
   title: "Home"
-  href: index.html
+  href: homepage.html
   right:
     - text: "Proposal"
       href: proposal.html
@@ -22,3 +22,5 @@ navbar:
 output:
   html_document:
     theme: cerulean
+
+include: ["homepage.html"]
